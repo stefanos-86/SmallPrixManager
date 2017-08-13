@@ -5,13 +5,21 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.txt" />
+    <Filter Include="codice\gui">
+      <UniqueIdentifier>{64879921-915f-4b1a-b198-8f7fffd309a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SmallPrixManager.cpp">
       <Filter>codice</Filter>
     </ClCompile>
+    <ClCompile Include="Gui\Gui.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Gui\Gui.h">
+      <Filter>codice\gui</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
