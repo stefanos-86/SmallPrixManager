@@ -8,6 +8,8 @@
 #include "imgui\imgui.h"
 #include "imgui\imgui-SFML.h"
 
+#include "PolyLine.h"
+
 namespace spm {
 	MasterGui::MasterGui() :
 		window(sf::VideoMode(800, 600), "SmallPrixManager", sf::Style::Default)
@@ -66,9 +68,13 @@ namespace spm {
 		ImGui::Button("Look at this pretty button");
 		ImGui::End();
 
+
 		window.clear();
 	//	window.draw(shape);
 		ImGui::SFML::Render(window);
+
+		PolyLine p;
+		window.draw(p);
 		window.display();
 	}
 }

@@ -16,9 +16,6 @@
     <ClCompile Include="SmallPrixManager.cpp">
       <Filter>codice</Filter>
     </ClCompile>
-    <ClCompile Include="Gui\Gui.cpp">
-      <Filter>codice</Filter>
-    </ClCompile>
     <ClCompile Include="Gui\imgui\imgui.cpp">
       <Filter>codice\gui\imgui</Filter>
     </ClCompile>
@@ -30,6 +27,12 @@
     </ClCompile>
     <ClCompile Include="Gui\imgui\imgui-SFML.cpp">
       <Filter>codice\gui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\Gui.cpp">
+      <Filter>codice\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\PolyLine.cpp">
+      <Filter>codice\gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +62,9 @@
     </ClInclude>
     <ClInclude Include="Gui\imgui\imgui-SFML.h">
       <Filter>codice\gui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\PolyLine.h">
+      <Filter>codice\gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
