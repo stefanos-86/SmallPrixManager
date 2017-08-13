@@ -11,6 +11,7 @@ namespace spm {
 	class MasterGui {
 	public:
 		MasterGui();
+		~MasterGui();
 		void mainLoop();
 
 	private:

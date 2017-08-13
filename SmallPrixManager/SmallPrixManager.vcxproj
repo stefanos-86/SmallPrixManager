@@ -41,12 +41,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\sfml\SFML-2.4.2\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\sfml\SFML-2.4.2\include;C:\imgui\imgui;$(IncludePath)</IncludePath>
     <LibraryPath>C:\sfml\SFML-2.4.2\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\sfml\SFML-2.4.2\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\sfml\SFML-2.4.2\include;C:\imgui\imgui;$(IncludePath)</IncludePath>
     <LibraryPath>C:\sfml\SFML-2.4.2\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -85,10 +85,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Gui\Gui.cpp" />
+    <ClCompile Include="Gui\imgui\imgui-SFML.cpp" />
+    <ClCompile Include="Gui\imgui\imgui.cpp" />
+    <ClCompile Include="Gui\imgui\imgui_demo.cpp" />
+    <ClCompile Include="Gui\imgui\imgui_draw.cpp" />
     <ClCompile Include="SmallPrixManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gui\Gui.h" />
+    <ClInclude Include="Gui\imgui\imconfig-SFML.h" />
+    <ClInclude Include="Gui\imgui\imconfig.h" />
+    <ClInclude Include="Gui\imgui\imgui-SFML.h" />
+    <ClInclude Include="Gui\imgui\imgui.h" />
+    <ClInclude Include="Gui\imgui\imgui_internal.h" />
+    <ClInclude Include="Gui\imgui\stb_rect_pack.h" />
+    <ClInclude Include="Gui\imgui\stb_textedit.h" />
+    <ClInclude Include="Gui\imgui\stb_truetype.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

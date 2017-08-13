@@ -8,6 +8,9 @@
     <Filter Include="codice\gui">
       <UniqueIdentifier>{64879921-915f-4b1a-b198-8f7fffd309a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="codice\gui\imgui">
+      <UniqueIdentifier>{43efa3fa-619d-4709-991a-6d1a35bfd127}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SmallPrixManager.cpp">
@@ -16,10 +19,46 @@
     <ClCompile Include="Gui\Gui.cpp">
       <Filter>codice</Filter>
     </ClCompile>
+    <ClCompile Include="Gui\imgui\imgui.cpp">
+      <Filter>codice\gui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\imgui\imgui_demo.cpp">
+      <Filter>codice\gui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\imgui\imgui_draw.cpp">
+      <Filter>codice\gui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\imgui\imgui-SFML.cpp">
+      <Filter>codice\gui\imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gui\Gui.h">
       <Filter>codice\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\imgui\imconfig.h">
+      <Filter>codice\gui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\imgui\imgui.h">
+      <Filter>codice\gui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\imgui\imgui_internal.h">
+      <Filter>codice\gui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\imgui\stb_rect_pack.h">
+      <Filter>codice\gui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\imgui\stb_textedit.h">
+      <Filter>codice\gui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\imgui\stb_truetype.h">
+      <Filter>codice\gui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\imgui\imconfig-SFML.h">
+      <Filter>codice\gui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\imgui\imgui-SFML.h">
+      <Filter>codice\gui\imgui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
