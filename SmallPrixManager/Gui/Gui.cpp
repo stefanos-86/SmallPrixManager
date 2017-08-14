@@ -107,13 +107,12 @@ namespace spm {
         static float carPosition = 0;
         ImGui::SliderFloat("Posizione machina", &carPosition, 0, b.length());
 
-        TangentCircle t(b.atLength(carPosition), b.atLength(carPosition - 0.1f), b.atLength(carPosition + 0.1f));
-        float radius = t.radius();
-        if (isnan(radius))
+        float radius = b.curvatureRadiusAtLength(carPosition);
+        if (isinf(radius))
             ImGui::Text("Rettilineo");
         else {
             ImGui::Text("Raggio curva %f", radius);
-            ImGui::Text("v max %f", sqrt(9.81 * radius));
+            ImGui::Text("v max %f", sqrt(9.81 * abs(radius)));
             // Info utili sull'attrito: http://www.hwupgrade.it/forum/archive/index.php/t-900763.html
         }
 		ImGui::End();

@@ -5,7 +5,9 @@
 
 namespace spm {
 
-    /** In italian is "cerchio osculatore". */
+    /** In italian is "cerchio osculatore". 
+    *** UNUSED *** Code kept as it has a 3x3 matrix inverter that may come useful later on.
+    */
     class TangentCircle {
     public:
         /** Circle passing trough this points. */

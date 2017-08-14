@@ -1,6 +1,10 @@
 #include "Bezier.h"
 
+#include <stdexcept>
+
 #include "Math.h"
+
+#include <iostream>
 
 namespace spm {
     Bezier::Bezier(const Point& p0,
@@ -15,7 +19,9 @@ namespace spm {
         simplified to compute stuff just once.
     */
     Point Bezier::at(const float parameter) const {
-        // TODO: reject nonsensical parameters
+        if (parameter < 0 || parameter > 1)
+            throw std::runtime_error("Bezier parameter out of interval.");
+
 
         const float u = 1.0f - parameter;
         const float tt = parameter * parameter;
@@ -33,7 +39,7 @@ namespace spm {
 
 
     Point Bezier::atLength(const float parameter) const {
-        const float uniformParameter = parameter / length();
+        const float uniformParameter = parameter / length();  // TODO: duplicated
         return at(uniformParameter);
     }
 
@@ -55,7 +61,7 @@ namespace spm {
 
 
     void Bezier::raster(std::vector<Point>& points, const size_t desiredPointCount) const {
-        const float step = 1.0f / (desiredPointCount - 1);  // Mind the fencepost: the last point has to be at(1).
+        const float step = 1.0f / (desiredPointCount - 1);  // Mind the fencepost: n points, n - intervals in between.
         float cursor = 0;
 
         points = std::vector<Point>(desiredPointCount, Point(0, 0));
@@ -67,16 +73,50 @@ namespace spm {
     }
 
 
+    float Bezier::curvatureRadiusAt(const float parameter) const {
+        // Formula is: sqrt( (x1*x1+y1*y1)**3) / (x1*y2-y1*y2); where xi, yi = values of the i-th derivative.
+
+        const Point d0 = (p1 - p0);
+        const Point d1 = (p2 - p1);
+        const Point d2 = (p3 - p2);
+
+        const float oneMinusT = 1 - parameter;
+
+        const Point firstDerivative = 3 * oneMinusT * oneMinusT * d0 +
+                                      6 * oneMinusT * parameter * d1 +
+                                      3 * parameter * d2;
+
+        const Point dd0 = p2 - 2 * p1 + p0;
+        const Point dd1 = p3 - 2 * p2 + p1;
+
+        const Point secondDerivative = 6 * oneMinusT * dd0 + 
+                                       6 * parameter * dd1;
+
+        const float x1 = firstDerivative.x;
+        const float y1 = firstDerivative.y;
+
+        const float x2 = secondDerivative.x;
+        const float y2 = secondDerivative.y;
+
+        const float k = std::sqrt(x1 * x1 + y1 * y1);
+
+        const float radius =  (k * k * k) / (x1*y2 - y1*x2);
+        return radius;
+    }
+
+
+    float Bezier::curvatureRadiusAtLength(const float parameter) const {
+        const float uniformParameter = parameter / length();
+        return curvatureRadiusAt(uniformParameter);
+    }
+
+
     BezierPath::BezierPath(const std::vector<Point>& points) {
-        
         static const float scale = 0.0015f;  // Tweak until it works... Very small = precise curves, close to the points.
         std::vector<Point> controlPoints;
 
-        /* TODO
         if (points.size() < 2)
-        {
-            throw...;
-        }*/
+            throw std::runtime_error("Need at least 3 points for a Bezier path.");
 
         for (size_t i = 0; i < points.size(); ++i)
         {
@@ -141,6 +181,7 @@ namespace spm {
             const float lengthOfCurve = cursor->length();
             if (cumulativeLength + lengthOfCurve > parameter) {
                 const float lengthInCurve = parameter - cumulativeLength;
+                std::cout << "lengthInCurve " << lengthInCurve << std::endl;
                 return cursor->atLength(lengthInCurve);
             }
             cumulativeLength += lengthOfCurve;
@@ -149,6 +190,8 @@ namespace spm {
 
         return Point(-1, -1); //TODO: throw o prevenire parametri assurdi.
     }
+
+
 
     float BezierPath::length() const {
         float length = 0;
@@ -159,6 +202,23 @@ namespace spm {
 
     size_t BezierPath::size() const {
         return elements.size();
+    }
+
+    float BezierPath::curvatureRadiusAtLength(const float parameter) const {
+        // Don't forget that component curves are not all equals!   TODO: code that find the spline is duplicated...
+        auto cursor = std::begin(elements);
+        auto end = std::end(elements);
+
+        float cumulativeLength = 0;
+        while (cursor != end) {
+            const float lengthOfCurve = cursor->length();
+            if (cumulativeLength + lengthOfCurve > parameter) {
+                const float lengthInCurve = parameter - cumulativeLength;
+                return cursor->curvatureRadiusAtLength(lengthInCurve);
+            }
+            cumulativeLength += lengthOfCurve;
+            cursor++;
+        }
     }
 
 

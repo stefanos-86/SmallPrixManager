@@ -8,7 +8,13 @@
 namespace spm {
 
 	/** Poor man's implementation of a cubic Bezier curve.
-	    Credits to http://devmag.org.za/2011/04/05/bzier-curves-a-tutorial/ */
+
+	    Credits to http://devmag.org.za/2011/04/05/bzier-curves-a-tutorial/ 
+        Useful math at: http://digilander.libero.it/b.dellavecchia/cagd/spline/Bezier/bezier-der.html
+        More useful math at: http://www.kino3d.com/forum/viewtopic.php?f=7&t=8806 (look for "cerchio osculatore").
+        The above has an error in the formula: compare with http://mathworld.wolfram.com/RadiusofCurvature.html.
+        Derivative formula from https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Cubic_B.C3.A9zier_curves.
+        */
 	class Bezier {
 	public:
 
@@ -33,6 +39,13 @@ namespace spm {
             Points are equally spaced (the most simple algorithm). */
         void raster(std::vector<Point>& points, const size_t desiredPointCount) const;  // TODO: direct tests
 
+        /** Radius of the circle tangent to the curve at that point. */
+        float curvatureRadiusAt(const float parameter) const;
+
+        
+        /** Radius of the circle tangent to the curve at that point, parameter expressed as metric distance. */
+        float curvatureRadiusAtLength(const float parameter) const;
+
 	private:
         const Point p0;
 		const Point p1;
@@ -41,7 +54,7 @@ namespace spm {
 	};
 
 
-    /** Set of Bezier curves attached one after the other. */
+    /** Set of Bezier curves attached one after the other to form a complicated path. */
     class BezierPath {
     public:
         BezierPath(const std::vector<Point>& points);
@@ -59,6 +72,9 @@ namespace spm {
         /** Returns the maximum value that you can give to the parameter. Which also is the number of curves in the path.
             This path is made of many curves. The point at, say, 1.5, is the point at 0.5 in the second curve.*/
         size_t size() const;
+
+        /** Curvature radius of the spline at that particular distance. */
+        float curvatureRadiusAtLength(const float parameter) const;
 
 
     private:
