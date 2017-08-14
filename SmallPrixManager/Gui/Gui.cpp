@@ -100,7 +100,7 @@ namespace spm {
 
         BezierPath b(monza);
 
-		ImGui::Begin("Monza!")
+		ImGui::Begin("Monza!");
         static float carPosition = 0;
         ImGui::SliderFloat("Posizione machina", &carPosition, 0, b.length());
 

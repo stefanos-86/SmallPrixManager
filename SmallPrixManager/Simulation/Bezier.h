@@ -32,7 +32,7 @@ namespace spm {
 		Point at(const float parameter) const;
 
         /** Returns the point for a given value of the parameter as expressed in distance units, not between 0 and 1. */
-        Point atLength(const float parameter) const;
+        Point atLength(const float length) const;
 
         /** Returns an approximate length of the curve. */
         float length() const;
@@ -47,13 +47,15 @@ namespace spm {
 
         
         /** Radius of the circle tangent to the curve at that point, parameter expressed as metric distance. */
-        float curvatureRadiusAtLength(const float parameter) const;
+        float curvatureRadiusAtLength(const float length) const;
 
 	private:
         const Point p0;
 		const Point p1;
 		const Point p2;
 		const Point p3;
+
+        float lengthToParameter(const float l) const;
 	};
 
 

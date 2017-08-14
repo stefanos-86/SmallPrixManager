@@ -41,9 +41,8 @@ namespace spm {
     }
 
 
-    Point Bezier::atLength(const float parameter) const {
-        const float uniformParameter = parameter / length();  // TODO: duplicated
-        return at(uniformParameter);
+    Point Bezier::atLength(const float length) const {
+        return at(lengthToParameter(length));
     }
 
     float Bezier::length() const {
@@ -72,7 +71,7 @@ namespace spm {
         points.reserve(points.size() + RASTER_POINT_COUNT);
 
         for (size_t i = 0; i <= intervalCount; ++i){
-            points.push_back(at(cursor));
+            points.push_back(at(cursor));           // Those points could be cached for efficiency, if the need be.
             cursor += step;
         }
     }
@@ -110,9 +109,13 @@ namespace spm {
     }
 
 
-    float Bezier::curvatureRadiusAtLength(const float parameter) const {
-        const float uniformParameter = parameter / length();
-        return curvatureRadiusAt(uniformParameter);
+    float Bezier::curvatureRadiusAtLength(const float length) const {
+        return curvatureRadiusAt(lengthToParameter(length));
+    }
+
+
+    float Bezier::lengthToParameter(const float l) const{
+        return l / length();
     }
 
 
@@ -123,43 +126,44 @@ namespace spm {
         if (points.size() < 2)
             throw std::runtime_error("Need at least 3 points for a Bezier path.");
 
-        for (size_t i = 0; i < points.size(); ++i)
+        // Special case: 1st point (the block is to re-use variable names and keep consistent with all cases).
         {
-            if (i == 0) // is first  --- TODO: pull out of the loop, then iterate from 1
-            {
-                Point p1 = points[i];
-                Point p2 = points[i + 1];
+            size_t i = 0;
+            Point p1 = points[i];
+            Point p2 = points[i + 1];
 
-                Point tangent = (p2 - p1);
-                Point q1 = p1 + scale * tangent;
+            Point tangent = (p2 - p1);
+            Point q1 = p1 + scale * tangent;
 
-                controlPoints.push_back(p1);
-                controlPoints.push_back(q1);
-            }
-            else if (i == points.size() - 1) //last  -- TODO: same as above, stop the iteration one short!
-            {
-                Point p0 = points[i - 1];
-                Point p1 = points[i];
-                Point tangent = p1 - p0;
-                tangent.normalize();
-                Point q0 = p1 - scale * tangent;
+            controlPoints.push_back(p1);
+            controlPoints.push_back(q1);
+        }
 
-                controlPoints.push_back(q0);
-                controlPoints.push_back(p1);
-            }
-            else
-            {
-                Point p0 = points[i - 1];
-                Point p1 = points[i];
-                Point p2 = points[i + 1];
-                Point tangent = (p2 - p0);
-                Point q0 = p1 - scale * tangent * (p1 - p0).magnitude();
-                Point q1 = p1 + scale * tangent * (p2 - p1).magnitude();
+        for (size_t i = 1; i < points.size() - 1; ++i)
+        {
+            Point p0 = points[i - 1];
+            Point p1 = points[i];
+            Point p2 = points[i + 1];
+            Point tangent = (p2 - p0);
+            Point q0 = p1 - scale * tangent * (p1 - p0).magnitude();
+            Point q1 = p1 + scale * tangent * (p2 - p1).magnitude();
 
-                controlPoints.push_back(q0);
-                controlPoints.push_back(p1);
-                controlPoints.push_back(q1);
-            }
+            controlPoints.push_back(q0);
+            controlPoints.push_back(p1);
+            controlPoints.push_back(q1);
+        }
+
+        // Special handling of last point.
+        {
+            size_t i =  points.size() - 1;
+            Point p0 = points[i - 1];
+            Point p1 = points[i];
+            Point tangent = p1 - p0;
+            tangent.normalize();
+            Point q0 = p1 - scale * tangent;
+
+            controlPoints.push_back(q0);
+            controlPoints.push_back(p1);
         }
 
         for (size_t i = 0; i < controlPoints.size() - 1; i += 3){
