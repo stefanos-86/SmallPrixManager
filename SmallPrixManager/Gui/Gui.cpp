@@ -21,7 +21,7 @@ namespace spm {
 		window(sf::VideoMode(800, 600), "SmallPrixManager", sf::Style::Default)
 		{
 			window.setVerticalSyncEnabled(true);
-			//window.setFramerateLimit(60);
+			window.setFramerateLimit(60);
 			sf::ContextSettings settings = window.getSettings();
 			ImGui::SFML::Init(window);
 		}

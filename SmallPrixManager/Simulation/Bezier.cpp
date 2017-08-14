@@ -4,6 +4,8 @@
 
 #include "Math.h"
 
+#include <algorithm>
+#include <iterator>
 #include <iostream>
 
 namespace spm {
@@ -15,16 +17,17 @@ namespace spm {
                    const Point& p2,
                    const Point& p3) :
     p0(p0), p1(p1), p2(p2), p3(p3) 
-    {    }
+    {
+        computeRasterPoints();
+        computeLength();
+    }
 
     /** Formula is:
         P = (1–t)^3p0 + 3(1–t)^2t p1 + 3(1–t)t^2 p2+ t^3 p3
         simplified to compute stuff just once.
     */
     Point Bezier::at(const float parameter) const {
-        if (parameter < 0 || parameter > 1)
-            throw std::runtime_error("Bezier parameter out of interval.");
-
+        stopBadParameters(parameter);
 
         const float u = 1.0f - parameter;
         const float tt = parameter * parameter;
@@ -46,34 +49,13 @@ namespace spm {
     }
 
     float Bezier::length() const {
-        std::vector<Point> points;
-        raster(points);
-
-        float length = 0;
-
-        auto cursor = std::begin(points);
-        auto last = std::end(points) - 1;
-        while (cursor != last) {
-            length += (*cursor - *(cursor + 1)).magnitude();
-            cursor++;
-        }
-
-        return length;
+        return lengthCache;
     }
 
 
     void Bezier::raster(std::vector<Point>& points) const {
-        const size_t intervalCount = RASTER_POINT_COUNT - 1; // Mind the fencepost: n points, n - intervals in between.
-        const float step = 1.0f / intervalCount;  
-        float cursor = 0;
-
-        // Make room for the new points.
-        points.reserve(points.size() + RASTER_POINT_COUNT);
-
-        for (size_t i = 0; i <= intervalCount; ++i){
-            points.push_back(at(cursor));           // Those points could be cached for efficiency, if the need be.
-            cursor += step;
-        }
+        // Assume raster points have already been computed. This must be true, as they are "baked" in the constructor.
+        std::copy(std::begin(rasterCache), std::end(rasterCache), std::back_inserter(points));
     }
 
 
@@ -116,6 +98,39 @@ namespace spm {
 
     float Bezier::lengthToParameter(const float l) const{
         return l / length();
+    }
+
+    void Bezier::stopBadParameters(const float parameter) const {
+        if (parameter < 0 || parameter > 1)
+            throw std::runtime_error("Bezier parameter out of interval.");
+    }
+
+    void Bezier::computeLength() {
+        std::vector<Point> points;
+        raster(points);
+
+        lengthCache = 0;
+
+        auto cursor = std::begin(points);
+        auto last = std::end(points) - 1;
+        while (cursor != last) {
+            lengthCache += (*cursor - *(cursor + 1)).magnitude();
+            cursor++;
+        }
+    }
+
+    void Bezier::computeRasterPoints() {
+        const size_t intervalCount = RASTER_POINT_COUNT - 1; // Mind the fencepost: n points, n - intervals in between.
+        const float step = 1.0f / intervalCount;  
+        float cursor = 0;
+
+        // Make room for the new points.
+        rasterCache.reserve(RASTER_POINT_COUNT);
+
+        for (size_t i = 0; i <= intervalCount; ++i){
+            rasterCache.push_back(at(cursor));
+            cursor += step;
+        }
     }
 
 
@@ -191,14 +206,14 @@ namespace spm {
             const float lengthOfCurve = cursor->length();
             if (cumulativeLength + lengthOfCurve > parameter) {
                 const float lengthInCurve = parameter - cumulativeLength;
-                std::cout << "lengthInCurve " << lengthInCurve << std::endl;
                 return cursor->atLength(lengthInCurve);
             }
             cumulativeLength += lengthOfCurve;
             cursor++;
         }
 
-        return Point(-1, -1); //TODO: throw o prevenire parametri assurdi.
+        return (cursor -1)->at(1);  //There must be an off by one over there...
+            
     }
 
 
@@ -238,6 +253,8 @@ namespace spm {
             cumulativeLength += lengthOfCurve;
             cursor++;
         }
+
+        return (cursor -1)->curvatureRadiusAtLength(1);  //There must be an off by one over there...
     }
 
 

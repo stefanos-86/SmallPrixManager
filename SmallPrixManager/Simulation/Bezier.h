@@ -55,7 +55,19 @@ namespace spm {
 		const Point p2;
 		const Point p3;
 
+        /** Save computation by caching the length (the curves can't be modified after construction). */
+        float lengthCache;
+
+        /** Save computation by caching the raster points (the curves can't be modified after construction). */
+        std::vector<Point> rasterCache;
+
         float lengthToParameter(const float l) const;
+
+        void stopBadParameters(const float parameter) const;
+
+        void computeLength();
+
+        void computeRasterPoints();
 	};
 
 
