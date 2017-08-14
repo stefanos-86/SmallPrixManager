@@ -64,15 +64,12 @@ namespace spm {
 	}
 
 	void MasterGui::render() {
-
-		/*sf::CircleShape shape(100.f);
-		shape.setFillColor(sf::Color::Green);*/
 		ImGui::SFML::Update(window, deltaClock.restart());
 
         std::vector<Point> monza = {
             { 521, 562 },
-            { 314, 567 },
-            { 309, 545 },
+            { 314, 562 },
+            { 309, 562 },
             { 256, 568 },
             { 184, 568 },
             { 142, 537 },

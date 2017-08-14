@@ -64,6 +64,12 @@
     <ClCompile Include="Gui\PointConversion.cpp">
       <Filter>codice</Filter>
     </ClCompile>
+    <ClCompile Include="Simulation\Track.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Simulation\TrackTest.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gui\Gui.h">
@@ -105,5 +111,6 @@
     <ClInclude Include="Simulation\TangentCircle.h" />
     <ClInclude Include="Simulation\Math.h" />
     <ClInclude Include="Gui\PointConversion.h" />
+    <ClInclude Include="Simulation\Track.h" />
   </ItemGroup>
 </Project>

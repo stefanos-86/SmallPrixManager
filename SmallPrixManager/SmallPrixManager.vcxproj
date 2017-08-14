@@ -95,10 +95,12 @@
     <ClCompile Include="Simulation\Bezier.cpp" />
     <ClCompile Include="Simulation\Math.cpp" />
     <ClCompile Include="Simulation\TangentCircle.cpp" />
+    <ClCompile Include="Simulation\Track.cpp" />
     <ClCompile Include="SmallPrixManager.cpp" />
     <ClCompile Include="Test\Simulation\BezierTest.cpp" />
     <ClCompile Include="Test\Simulation\MathTest.cpp" />
     <ClCompile Include="Test\Simulation\TangentCircleTest.cpp" />
+    <ClCompile Include="Test\Simulation\TrackTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gui\BezierAdapter.h" />
@@ -116,6 +118,7 @@
     <ClInclude Include="Simulation\Bezier.h" />
     <ClInclude Include="Simulation\Math.h" />
     <ClInclude Include="Simulation\TangentCircle.h" />
+    <ClInclude Include="Simulation\Track.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

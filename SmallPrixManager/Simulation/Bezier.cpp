@@ -239,7 +239,7 @@ namespace spm {
     }
 
     float BezierPath::curvatureRadiusAtLength(const float parameter) const {
-        // Don't forget that component curves are not all equals!   TODO: code that find the spline is duplicated...
+        // Don't forget that component curves are not all equals!   TODO: code that find the spline is duplicated... + there is an off by one at the end!
         auto cursor = std::begin(elements);
         auto end = std::end(elements);
 
