@@ -61,6 +61,12 @@
     <ClCompile Include="Test\Simulation\TangentCircleTest.cpp">
       <Filter>codice</Filter>
     </ClCompile>
+    <ClCompile Include="Test\Simulation\MathTest.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\Math.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gui\Gui.h">
@@ -103,5 +109,6 @@
       <Filter>codice\Gui</Filter>
     </ClInclude>
     <ClInclude Include="Simulation\TangentCircle.h" />
+    <ClInclude Include="Simulation\Math.h" />
   </ItemGroup>
 </Project>

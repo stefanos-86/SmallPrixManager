@@ -4,7 +4,7 @@
 	PATH=C:\sfml\SFML-2.4.2\bin;%PATH%
 */
 
-//#define WITH_TESTS true
+#define WITH_TESTS true
 
 #ifdef WITH_TESTS
 #include "gtest/gtest.h"
