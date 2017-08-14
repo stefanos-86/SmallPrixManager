@@ -17,6 +17,8 @@ namespace spm {
         */
 	class Bezier {
 	public:
+        /** Uses this many points for the algorithms that require to convert the curve to a polyline. */
+        static const size_t RASTER_POINT_COUNT;
 
 		/** Makes a curve from the 4 control points. 
 		    The curve starts at p0 and ends at p3. Endpoint tangents go from p0 to p1 and from p2 to p3. */
@@ -36,8 +38,9 @@ namespace spm {
         float length() const;
 
         /** Rasterization of the curve, creates a polyline which has the given amount of points. 
-            Points are equally spaced (the most simple algorithm). */
-        void raster(std::vector<Point>& points, const size_t desiredPointCount) const;  // TODO: direct tests
+            Points are equally spaced (the most simple algorithm). 
+            Appends the points to the vector. */
+        void raster(std::vector<Point>& points) const;
 
         /** Radius of the circle tangent to the curve at that point. */
         float curvatureRadiusAt(const float parameter) const;
@@ -68,6 +71,10 @@ namespace spm {
 
         /** Approximate total length of the path. */
         float length() const;
+
+        /** Rasterization of the curve, creates a polyline which has the given amount of points. 
+        Points are equally spaced (the most simple algorithm). */
+        void raster(std::vector<Point>& points) const;
 
         /** Returns the maximum value that you can give to the parameter. Which also is the number of curves in the path.
             This path is made of many curves. The point at, say, 1.5, is the point at 0.5 in the second curve.*/

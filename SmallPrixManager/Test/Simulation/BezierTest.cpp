@@ -36,7 +36,7 @@ namespace spm {
     TEST(Bezier, length) {
         const Bezier c(Point(0, 0), Point(0, 0.5), Point(0, 9.5), Point(0, 10));
 
-        ASSERT_EQ(10, c.length());
+        ASSERT_EQ(c.length(), 10);
     }
 
 

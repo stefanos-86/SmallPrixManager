@@ -7,6 +7,9 @@
 #include <iostream>
 
 namespace spm {
+
+    const size_t Bezier::RASTER_POINT_COUNT = 10;
+
     Bezier::Bezier(const Point& p0,
                    const Point& p1,
                    const Point& p2,
@@ -45,7 +48,7 @@ namespace spm {
 
     float Bezier::length() const {
         std::vector<Point> points;
-        raster(points, 10);
+        raster(points);
 
         float length = 0;
 
@@ -60,14 +63,16 @@ namespace spm {
     }
 
 
-    void Bezier::raster(std::vector<Point>& points, const size_t desiredPointCount) const {
-        const float step = 1.0f / (desiredPointCount - 1);  // Mind the fencepost: n points, n - intervals in between.
+    void Bezier::raster(std::vector<Point>& points) const {
+        const size_t intervalCount = RASTER_POINT_COUNT - 1; // Mind the fencepost: n points, n - intervals in between.
+        const float step = 1.0f / intervalCount;  
         float cursor = 0;
 
-        points = std::vector<Point>(desiredPointCount, Point(0, 0));
+        // Make room for the new points.
+        points.reserve(points.size() + RASTER_POINT_COUNT);
 
-        for (size_t i = 0; i <= desiredPointCount - 1; ++i){
-            points[i] = at(cursor);
+        for (size_t i = 0; i <= intervalCount; ++i){
+            points.push_back(at(cursor));
             cursor += step;
         }
     }
@@ -171,6 +176,7 @@ namespace spm {
         return elements.at(integer_part).at(decimals);
     }
 
+
     Point BezierPath::atLength(const float parameter) const {
         // Don't forget that component curves are not all equals!
         auto cursor = std::begin(elements);
@@ -199,6 +205,15 @@ namespace spm {
             length += c.length();
         return length;
     }
+
+
+    void BezierPath::raster(std::vector<Point>& points) const {
+        const size_t totalPoints = size() * Bezier::RASTER_POINT_COUNT;
+        
+        for (const Bezier& c: elements)
+            c.raster(points);
+    }
+
 
     size_t BezierPath::size() const {
         return elements.size();

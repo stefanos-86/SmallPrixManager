@@ -6,34 +6,16 @@
 #include "PointConversion.h"
 
 namespace spm {
-
-    const size_t BezierAdapter::POINT_COUNT = 20;
-
     BezierAdapter::BezierAdapter(const Bezier& curve) :
-        points(sf::LineStrip, BezierAdapter::POINT_COUNT)
+        points(sf::LineStrip, Bezier::RASTER_POINT_COUNT)
     {
-        const float step = 1.0f / BezierAdapter::POINT_COUNT;  // TODO: duplicate code.
-        float cursor = 0;
-
-        for (size_t i = 0; i < BezierAdapter::POINT_COUNT; ++i){
-            this->points[i].position = toGraphic(curve.at(cursor));
-            this->points[i].color = sf::Color::White;
-            cursor += step;
-        }
+        storeRasterizedPoints(curve);
     }
 
     BezierAdapter::BezierAdapter(const BezierPath& curve) :
-        points(sf::LineStrip, BezierAdapter::POINT_COUNT * curve.size())
+        points(sf::LineStrip, Bezier::RASTER_POINT_COUNT * curve.size())
     {
-        const size_t totalPoints = curve.size() * BezierAdapter::POINT_COUNT;
-        const float step = 1.0f / BezierAdapter::POINT_COUNT;
-        float cursor = 0;
-
-        for (size_t i = 0; i < totalPoints; ++i){  //TODO: duplicated code
-            this->points[i].position = toGraphic(curve.at(cursor));
-            this->points[i].color = sf::Color::White;
-            cursor += step;
-        }
+        storeRasterizedPoints(curve);
     }
 
 
