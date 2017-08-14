@@ -3,7 +3,7 @@
 
 #include <vector>
 
-/** There is no plan to ever port this code to other GUIs, so I recycle the math library. */
+/** There is no plan to ever port this code to other GUIs, so I recycle the "math" library. */
 #include <SFML\Graphics\Vertex.hpp>
 
 namespace spm {
@@ -22,6 +22,17 @@ namespace spm {
 
 		/** Returns the point for a given vaule of the parameter. */
 		sf::Vector2f at(const float parameter) const;
+
+        /** Returns the point for a given value of the parameter as expressed in distance units, not between 0 and 1. */
+        sf::Vector2f atLength(const float parameter) const;
+
+        /** Returns an approximate length of the curve. */
+        float length() const;
+
+        /** Rasterization of the curve, creates a polyline which has the given amount of points. 
+            Points are equally spaced (the most simple algorithm). */
+        void raster(std::vector<sf::Vector2f>& points, const size_t desiredPointCount) const;  // TODO: direct tests
+
 	private:
         const sf::Vector2f p0;
 		const sf::Vector2f p1;
@@ -39,11 +50,16 @@ namespace spm {
             The parameter goes from 1 to size(), then it hits the right curve inside the path. */
         sf::Vector2f at(const float parameter) const;
 
+        /** Returns the point for a given value of the parameter as expressed in distance units, not between 0 and size(). */
+        sf::Vector2f atLength(const float parameter) const;
+
+        /** Approximate total length of the path. */
+        float length() const;
+
         /** Returns the maximum value that you can give to the parameter. Which also is the number of curves in the path.
             This path is made of many curves. The point at, say, 1.5, is the point at 0.5 in the second curve.*/
         size_t size() const;
 
-        // TODO: total length + method to find the parameter "n meters away"
 
     private:
         std::vector <Bezier> elements;

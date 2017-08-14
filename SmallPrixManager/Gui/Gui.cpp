@@ -5,6 +5,8 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/OpenGL.hpp>
 
+#include <SFML/Graphics/CircleShape.hpp>
+
 #include "imgui\imgui.h"
 #include "imgui\imgui-SFML.h"
 
@@ -65,16 +67,7 @@ namespace spm {
 		shape.setFillColor(sf::Color::Green);*/
 		ImGui::SFML::Update(window, deltaClock.restart());
 
-		ImGui::Begin("Monza!");
-		//ImGui::Button("Look at this pretty button");
-		ImGui::End();
-
-
-		window.clear();
-	//	window.draw(shape);
-		ImGui::SFML::Render(window);
-
-		std::vector<sf::Vector2f> monza = {
+        std::vector<sf::Vector2f> monza = {
             { 521, 562 },
             { 314, 567 },
             { 309, 545 },
@@ -100,13 +93,32 @@ namespace spm {
             { 711, 552 },
             { 623, 562 },
             { 521, 562 }  // Repeat first point to close the curve.
-		};
-		//PolyLine p(monza);
-		//window.draw(p);
+        };
+        //PolyLine p(monza);
+        //window.draw(p);
 
         BezierPath b(monza);
+
+		ImGui::Begin("Monza!");
+		//ImGui::Button("Look at this pretty button");
+        static float carPosition = 0;
+        ImGui::SliderFloat("Posizione machina", &carPosition, 0, b.length());
+		ImGui::End();
+
+
+		window.clear();
+	//	window.draw(shape);
+		ImGui::SFML::Render(window);
+
+
         BezierAdapter ba(b);
         window.draw(ba);
+
+        sf::CircleShape carShape(5);
+        carShape.setFillColor(sf::Color::Red);
+        carShape.setPosition(b.atLength(carPosition));
+        window.draw(carShape);
+
 
 		window.display();
 	}

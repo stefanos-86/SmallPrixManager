@@ -10,7 +10,7 @@ namespace spm {
     BezierAdapter::BezierAdapter(const Bezier& curve) :
         points(sf::LineStrip, BezierAdapter::POINT_COUNT)
     {
-        const float step = 1.0f / BezierAdapter::POINT_COUNT;
+        const float step = 1.0f / BezierAdapter::POINT_COUNT;  // TODO: duplicate code.
         float cursor = 0;
 
         for (size_t i = 0; i < BezierAdapter::POINT_COUNT; ++i){
