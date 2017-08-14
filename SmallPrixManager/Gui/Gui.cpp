@@ -13,6 +13,8 @@
 #include "PolyLine.h"
 #include "BezierAdapter.h"
 
+#include "../Simulation/TangentCircle.h"
+
 namespace spm {
 	MasterGui::MasterGui() :
 		window(sf::VideoMode(800, 600), "SmallPrixManager", sf::Style::Default)
@@ -103,6 +105,16 @@ namespace spm {
 		//ImGui::Button("Look at this pretty button");
         static float carPosition = 0;
         ImGui::SliderFloat("Posizione machina", &carPosition, 0, b.length());
+
+        TangentCircle t(b.atLength(carPosition), b.atLength(carPosition - 0.1f), b.atLength(carPosition + 0.1f));
+        float radius = t.radius();
+        if (isnan(radius))
+            ImGui::Text("Rettilineo");
+        else {
+            ImGui::Text("Raggio curva %f", radius);
+            ImGui::Text("v max %f", sqrt(9.81 * radius));
+            // Info utili sull'attrito: http://www.hwupgrade.it/forum/archive/index.php/t-900763.html
+        }
 		ImGui::End();
 
 

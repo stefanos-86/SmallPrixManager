@@ -55,6 +55,12 @@
     <ClCompile Include="Gui\BezierAdapter.cpp">
       <Filter>codice\Gui</Filter>
     </ClCompile>
+    <ClCompile Include="Simulation\TangentCircle.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Simulation\TangentCircleTest.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gui\Gui.h">
@@ -96,5 +102,6 @@
     <ClInclude Include="Gui\BezierAdapter.h">
       <Filter>codice\Gui</Filter>
     </ClInclude>
+    <ClInclude Include="Simulation\TangentCircle.h" />
   </ItemGroup>
 </Project>
