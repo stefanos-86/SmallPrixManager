@@ -41,13 +41,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\sfml\SFML-2.4.2\include;C:\imgui\imgui;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\sfml\SFML-2.4.2\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\sfml\SFML-2.4.2\include;C:\imgui\imgui;C:\gtest\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\sfml\SFML-2.4.2\lib;C:\gtest\lib\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\sfml\SFML-2.4.2\include;C:\imgui\imgui;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\sfml\SFML-2.4.2\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\sfml\SFML-2.4.2\include;C:\imgui\imgui;C:\gtest\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\sfml\SFML-2.4.2\lib;C:\gtest\lib\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -60,7 +60,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;gtestd.lib;gtest_main-mdd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\sfml\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -79,20 +79,26 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;sfml-graphics.lib;fml-window.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;sfml-graphics.lib;fml-window.lib;sfml-system.lib;gtest.lib;gtest_main-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\sfml\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Gui\BezierAdapter.cpp" />
     <ClCompile Include="Gui\Gui.cpp" />
     <ClCompile Include="Gui\imgui\imgui-SFML.cpp" />
     <ClCompile Include="Gui\imgui\imgui.cpp" />
     <ClCompile Include="Gui\imgui\imgui_demo.cpp" />
     <ClCompile Include="Gui\imgui\imgui_draw.cpp" />
     <ClCompile Include="Gui\PolyLine.cpp" />
+    <ClCompile Include="Simulation\Bezier.cpp" />
+    <ClCompile Include="Simulation\ParametricCurve .cpp" />
     <ClCompile Include="SmallPrixManager.cpp" />
+    <ClCompile Include="Test\Simulation\BezierTest.cpp" />
+    <ClCompile Include="Test\Simulation\ParametricCurveTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Gui\BezierAdapter.h" />
     <ClInclude Include="Gui\Gui.h" />
     <ClInclude Include="Gui\imgui\imconfig-SFML.h" />
     <ClInclude Include="Gui\imgui\imconfig.h" />
@@ -103,6 +109,8 @@
     <ClInclude Include="Gui\imgui\stb_textedit.h" />
     <ClInclude Include="Gui\imgui\stb_truetype.h" />
     <ClInclude Include="Gui\PolyLine.h" />
+    <ClInclude Include="Simulation\Bezier.h" />
+    <ClInclude Include="Simulation\ParametricCurve.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

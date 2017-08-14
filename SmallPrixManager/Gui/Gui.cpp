@@ -9,6 +9,7 @@
 #include "imgui\imgui-SFML.h"
 
 #include "PolyLine.h"
+#include "BezierAdapter.h"
 
 namespace spm {
 	MasterGui::MasterGui() :
@@ -64,8 +65,8 @@ namespace spm {
 		shape.setFillColor(sf::Color::Green);*/
 		ImGui::SFML::Update(window, deltaClock.restart());
 
-		ImGui::Begin("Hello, world!");
-		ImGui::Button("Look at this pretty button");
+		ImGui::Begin("Monza!");
+		//ImGui::Button("Look at this pretty button");
 		ImGui::End();
 
 
@@ -73,8 +74,40 @@ namespace spm {
 	//	window.draw(shape);
 		ImGui::SFML::Render(window);
 
-		PolyLine p;
-		window.draw(p);
+		std::vector<sf::Vector2f> monza = {
+            { 521, 562 },
+            { 314, 567 },
+            { 309, 545 },
+            { 256, 568 },
+            { 184, 568 },
+            { 142, 537 },
+            { 108, 477 },
+            { 75, 250 },
+            { 60, 234 },
+            { 17, 90 },
+            { 19, 61 },
+            { 36, 44 },
+            { 108, 26 },
+            { 207, 187 },
+            { 361, 400 },
+            { 396, 400 },
+            { 424, 425 },
+            { 745, 431 },
+            { 773, 448 },
+            { 778, 481 },
+            { 769, 512 },
+            { 748, 537 },
+            { 711, 552 },
+            { 623, 562 },
+            { 521, 562 }  // Repeat first point to close the curve.
+		};
+		//PolyLine p(monza);
+		//window.draw(p);
+
+        BezierPath b(monza);
+        BezierAdapter ba(b);
+        window.draw(ba);
+
 		window.display();
 	}
 }

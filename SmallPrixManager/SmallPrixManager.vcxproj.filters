@@ -5,11 +5,17 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="codice\gui">
+    <Filter Include="codice\Gui">
       <UniqueIdentifier>{64879921-915f-4b1a-b198-8f7fffd309a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="codice\gui\imgui">
+    <Filter Include="codice\Gui\imgui">
       <UniqueIdentifier>{43efa3fa-619d-4709-991a-6d1a35bfd127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="codice\Simulation">
+      <UniqueIdentifier>{9975847d-1f01-4a3c-b0f0-e56524d53d2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test">
+      <UniqueIdentifier>{9afd031d-40d5-4766-a40a-9617ae29975f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -17,54 +23,78 @@
       <Filter>codice</Filter>
     </ClCompile>
     <ClCompile Include="Gui\imgui\imgui.cpp">
-      <Filter>codice\gui\imgui</Filter>
+      <Filter>codice\Gui\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Gui\imgui\imgui_demo.cpp">
-      <Filter>codice\gui\imgui</Filter>
+      <Filter>codice\Gui\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Gui\imgui\imgui_draw.cpp">
-      <Filter>codice\gui\imgui</Filter>
+      <Filter>codice\Gui\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Gui\imgui\imgui-SFML.cpp">
-      <Filter>codice\gui\imgui</Filter>
+      <Filter>codice\Gui\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Gui\Gui.cpp">
-      <Filter>codice\gui</Filter>
+      <Filter>codice\Gui</Filter>
     </ClCompile>
     <ClCompile Include="Gui\PolyLine.cpp">
-      <Filter>codice\gui</Filter>
+      <Filter>codice\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\ParametricCurve .cpp">
+      <Filter>codice\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Simulation\ParametricCurveTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\Bezier.cpp">
+      <Filter>codice\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\Simulation\BezierTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\BezierAdapter.cpp">
+      <Filter>codice\Gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gui\Gui.h">
-      <Filter>codice\gui</Filter>
+      <Filter>codice\Gui</Filter>
     </ClInclude>
     <ClInclude Include="Gui\imgui\imconfig.h">
-      <Filter>codice\gui\imgui</Filter>
+      <Filter>codice\Gui\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Gui\imgui\imgui.h">
-      <Filter>codice\gui\imgui</Filter>
+      <Filter>codice\Gui\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Gui\imgui\imgui_internal.h">
-      <Filter>codice\gui\imgui</Filter>
+      <Filter>codice\Gui\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Gui\imgui\stb_rect_pack.h">
-      <Filter>codice\gui\imgui</Filter>
+      <Filter>codice\Gui\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Gui\imgui\stb_textedit.h">
-      <Filter>codice\gui\imgui</Filter>
+      <Filter>codice\Gui\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Gui\imgui\stb_truetype.h">
-      <Filter>codice\gui\imgui</Filter>
+      <Filter>codice\Gui\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Gui\imgui\imconfig-SFML.h">
-      <Filter>codice\gui\imgui</Filter>
+      <Filter>codice\Gui\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Gui\imgui\imgui-SFML.h">
-      <Filter>codice\gui\imgui</Filter>
+      <Filter>codice\Gui\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Gui\PolyLine.h">
-      <Filter>codice\gui</Filter>
+      <Filter>codice\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\ParametricCurve.h">
+      <Filter>codice\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\Bezier.h">
+      <Filter>codice\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\BezierAdapter.h">
+      <Filter>codice\Gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,8 +5,21 @@
 
 namespace spm {
 
-	PolyLine::PolyLine()
+	PolyLine::PolyLine(const std::vector<float>& points) :
+		points(sf::LineStrip, points.size() / 2)
 	{
+		std::vector<float>::const_iterator i = std::begin(points);
+		size_t sfPointsCounter = 0;
+		while (i != std::end(points)){
+			const float x = *i;
+			++i;
+			const float y = *i;
+			++i;
+
+			this->points[sfPointsCounter].position = sf::Vector2f(x, y);
+			this->points[sfPointsCounter].color = sf::Color::White;
+			++sfPointsCounter;
+		}
 	}
 
 
@@ -16,18 +29,6 @@ namespace spm {
 
 
 	void PolyLine::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-		sf::VertexArray triangle(sf::Triangles, 3);
-
-		// define the position of the triangle's points
-		triangle[0].position = sf::Vector2f(10, 10);
-		triangle[1].position = sf::Vector2f(100, 10);
-		triangle[2].position = sf::Vector2f(100, 100);
-
-		// define the color of the triangle's points
-		triangle[0].color = sf::Color::Red;
-		triangle[1].color = sf::Color::Blue;
-		triangle[2].color = sf::Color::Green;
-		
-		target.draw(triangle, states);
+		target.draw(points, states);
 	}
 }
