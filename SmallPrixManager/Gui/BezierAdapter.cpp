@@ -3,6 +3,8 @@
 #include <SFML\Graphics\Vertex.hpp>
 #include <SFML\Graphics\RenderTarget.hpp>
 
+#include "PointConversion.h"
+
 namespace spm {
 
     const size_t BezierAdapter::POINT_COUNT = 20;
@@ -14,7 +16,7 @@ namespace spm {
         float cursor = 0;
 
         for (size_t i = 0; i < BezierAdapter::POINT_COUNT; ++i){
-            this->points[i].position = curve.at(cursor);
+            this->points[i].position = toGraphic(curve.at(cursor));
             this->points[i].color = sf::Color::White;
             cursor += step;
         }
@@ -28,7 +30,7 @@ namespace spm {
         float cursor = 0;
 
         for (size_t i = 0; i < totalPoints; ++i){  //TODO: duplicated code
-            this->points[i].position = curve.at(cursor);
+            this->points[i].position = toGraphic(curve.at(cursor));
             this->points[i].color = sf::Color::White;
             cursor += step;
         }

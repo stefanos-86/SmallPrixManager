@@ -1,29 +1,12 @@
 #include "Bezier.h"
 
-#include <iostream>
-
-/*TODO: move in some math library, then cry because it is not in SFML!!! */
-float magnitude(const sf::Vector2f& v) {
-    return sqrt(v.x * v.x + v.y * v.y);
-}
-
-void normalize(sf::Vector2f& v) {
-    const float length = magnitude(v);
-    v.x /= length;
-    v.y /= length;
-}
-
-const sf::Vector2f operator-(const sf::Vector2f& lhs, const sf::Vector2f& rhs) {
-    return sf::Vector2f(lhs.x - rhs.x, lhs.y - rhs.y);
-}
-
-
+#include "Math.h"
 
 namespace spm {
-    Bezier::Bezier(const sf::Vector2f p0,
-                   const sf::Vector2f p1,
-                   const sf::Vector2f p2,
-                   const sf::Vector2f p3) :
+    Bezier::Bezier(const Point& p0,
+                   const Point& p1,
+                   const Point& p2,
+                   const Point& p3) :
     p0(p0), p1(p1), p2(p2), p3(p3) 
     {    }
 
@@ -31,7 +14,7 @@ namespace spm {
         P = (1–t)^3p0 + 3(1–t)^2t p1 + 3(1–t)t^2 p2+ t^3 p3
         simplified to compute stuff just once.
     */
-    sf::Vector2f Bezier::at(const float parameter) const {
+    Point Bezier::at(const float parameter) const {
         // TODO: reject nonsensical parameters
 
         const float u = 1.0f - parameter;
@@ -40,7 +23,7 @@ namespace spm {
         const float uuu = uu * u;
         const float ttt = tt * parameter;
 
-        sf::Vector2f p = uuu * p0; //first term
+        Point p = uuu * p0; //first term
         p += 3 * uu * parameter * p1; //second term
         p += 3 * u * tt * p2; //third term
         p += ttt * p3; //fourth term
@@ -49,13 +32,13 @@ namespace spm {
     }
 
 
-    sf::Vector2f Bezier::atLength(const float parameter) const {
+    Point Bezier::atLength(const float parameter) const {
         const float uniformParameter = parameter / length();
         return at(uniformParameter);
     }
 
     float Bezier::length() const {
-        std::vector<sf::Vector2f> points;
+        std::vector<Point> points;
         raster(points, 10);
 
         float length = 0;
@@ -63,7 +46,7 @@ namespace spm {
         auto cursor = std::begin(points);
         auto last = std::end(points) - 1;
         while (cursor != last) {
-            length += magnitude(*cursor - *(cursor + 1));
+            length += (*cursor - *(cursor + 1)).magnitude();
             cursor++;
         }
 
@@ -71,11 +54,11 @@ namespace spm {
     }
 
 
-    void Bezier::raster(std::vector<sf::Vector2f>& points, const size_t desiredPointCount) const {
+    void Bezier::raster(std::vector<Point>& points, const size_t desiredPointCount) const {
         const float step = 1.0f / (desiredPointCount - 1);  // Mind the fencepost: the last point has to be at(1).
         float cursor = 0;
 
-        points = std::vector<sf::Vector2f>(desiredPointCount, sf::Vector2f(0, 0));
+        points = std::vector<Point>(desiredPointCount, Point(0, 0));
 
         for (size_t i = 0; i <= desiredPointCount - 1; ++i){
             points[i] = at(cursor);
@@ -84,9 +67,10 @@ namespace spm {
     }
 
 
-    BezierPath::BezierPath(const std::vector<sf::Vector2f>& points) {
+    BezierPath::BezierPath(const std::vector<Point>& points) {
+        
         static const float scale = 0.0015f;  // Tweak until it works... Very small = precise curves, close to the points.
-        std::vector<sf::Vector2f> controlPoints;
+        std::vector<Point> controlPoints;
 
         /* TODO
         if (points.size() < 2)
@@ -98,34 +82,34 @@ namespace spm {
         {
             if (i == 0) // is first  --- TODO: pull out of the loop, then iterate from 1
             {
-                sf::Vector2f p1 = points[i];
-                sf::Vector2f p2 = points[i + 1];
+                Point p1 = points[i];
+                Point p2 = points[i + 1];
 
-                sf::Vector2f tangent = (p2 - p1);
-                sf::Vector2f q1 = p1 + scale * tangent;
+                Point tangent = (p2 - p1);
+                Point q1 = p1 + scale * tangent;
 
                 controlPoints.push_back(p1);
                 controlPoints.push_back(q1);
             }
             else if (i == points.size() - 1) //last  -- TODO: same as above, stop the iteration one short!
             {
-                sf::Vector2f p0 = points[i - 1];
-                sf::Vector2f p1 = points[i];
-                sf::Vector2f tangent = p1 - p0;
-                normalize(tangent);
-                sf::Vector2f q0 = p1 - scale * tangent;
+                Point p0 = points[i - 1];
+                Point p1 = points[i];
+                Point tangent = p1 - p0;
+                tangent.normalize();
+                Point q0 = p1 - scale * tangent;
 
                 controlPoints.push_back(q0);
                 controlPoints.push_back(p1);
             }
             else
             {
-                sf::Vector2f p0 = points[i - 1];
-                sf::Vector2f p1 = points[i];
-                sf::Vector2f p2 = points[i + 1];
-                sf::Vector2f tangent = (p2 - p0);
-                sf::Vector2f q0 = p1 - scale * tangent * magnitude(p1 - p0);
-                sf::Vector2f q1 = p1 + scale * tangent * magnitude(p2 - p1);
+                Point p0 = points[i - 1];
+                Point p1 = points[i];
+                Point p2 = points[i + 1];
+                Point tangent = (p2 - p0);
+                Point q0 = p1 - scale * tangent * (p1 - p0).magnitude();
+                Point q1 = p1 + scale * tangent * (p2 - p1).magnitude();
 
                 controlPoints.push_back(q0);
                 controlPoints.push_back(p1);
@@ -140,14 +124,14 @@ namespace spm {
     }
 
 
-    sf::Vector2f BezierPath::at(const float parameter) const {
+    Point BezierPath::at(const float parameter) const {
         const size_t integer_part = static_cast<size_t>(parameter);
         const float decimals = parameter - integer_part;
 
         return elements.at(integer_part).at(decimals);
     }
 
-    sf::Vector2f BezierPath::atLength(const float parameter) const {
+    Point BezierPath::atLength(const float parameter) const {
         // Don't forget that component curves are not all equals!
         auto cursor = std::begin(elements);
         auto end = std::end(elements);
@@ -163,7 +147,7 @@ namespace spm {
             cursor++;
         }
 
-        return sf::Vector2f(-1, -1); //TODO: throw o prevenire parametri assurdi.
+        return Point(-1, -1); //TODO: throw o prevenire parametri assurdi.
     }
 
     float BezierPath::length() const {

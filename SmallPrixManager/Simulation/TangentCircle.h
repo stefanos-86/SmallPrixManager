@@ -1,7 +1,7 @@
 #ifndef SPM_TANGENT_CIRCLE
 #define SPM_TANGENT_CIRCLE
 
-#include <SFML\Graphics\Vertex.hpp>
+#include "Math.h"
 
 namespace spm {
 
@@ -9,7 +9,7 @@ namespace spm {
     class TangentCircle {
     public:
         /** Circle passing trough this points. */
-        TangentCircle(const sf::Vector2f& p0, const sf::Vector2f& p1, const sf::Vector2f& p2);
+        TangentCircle(const Point& p0, const Point& p1, const Point& p2);
 
         float radius() const;
 

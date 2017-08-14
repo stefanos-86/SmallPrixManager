@@ -90,15 +90,14 @@
     <ClCompile Include="Gui\imgui\imgui.cpp" />
     <ClCompile Include="Gui\imgui\imgui_demo.cpp" />
     <ClCompile Include="Gui\imgui\imgui_draw.cpp" />
+    <ClCompile Include="Gui\PointConversion.cpp" />
     <ClCompile Include="Gui\PolyLine.cpp" />
     <ClCompile Include="Simulation\Bezier.cpp" />
     <ClCompile Include="Simulation\Math.cpp" />
-    <ClCompile Include="Simulation\ParametricCurve .cpp" />
     <ClCompile Include="Simulation\TangentCircle.cpp" />
     <ClCompile Include="SmallPrixManager.cpp" />
     <ClCompile Include="Test\Simulation\BezierTest.cpp" />
     <ClCompile Include="Test\Simulation\MathTest.cpp" />
-    <ClCompile Include="Test\Simulation\ParametricCurveTest.cpp" />
     <ClCompile Include="Test\Simulation\TangentCircleTest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -112,10 +111,10 @@
     <ClInclude Include="Gui\imgui\stb_rect_pack.h" />
     <ClInclude Include="Gui\imgui\stb_textedit.h" />
     <ClInclude Include="Gui\imgui\stb_truetype.h" />
+    <ClInclude Include="Gui\PointConversion.h" />
     <ClInclude Include="Gui\PolyLine.h" />
     <ClInclude Include="Simulation\Bezier.h" />
     <ClInclude Include="Simulation\Math.h" />
-    <ClInclude Include="Simulation\ParametricCurve.h" />
     <ClInclude Include="Simulation\TangentCircle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

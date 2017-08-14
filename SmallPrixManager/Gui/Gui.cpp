@@ -14,6 +14,7 @@
 #include "BezierAdapter.h"
 
 #include "../Simulation/TangentCircle.h"
+#include "PointConversion.h"
 
 namespace spm {
 	MasterGui::MasterGui() :
@@ -69,7 +70,7 @@ namespace spm {
 		shape.setFillColor(sf::Color::Green);*/
 		ImGui::SFML::Update(window, deltaClock.restart());
 
-        std::vector<sf::Vector2f> monza = {
+        std::vector<Point> monza = {
             { 521, 562 },
             { 314, 567 },
             { 309, 545 },
@@ -128,7 +129,7 @@ namespace spm {
 
         sf::CircleShape carShape(5);
         carShape.setFillColor(sf::Color::Red);
-        carShape.setPosition(b.atLength(carPosition));
+        carShape.setPosition(toGraphic(b.atLength(carPosition)));
         window.draw(carShape);
 
 

@@ -37,7 +37,7 @@ namespace spm {
     }
 
 
-    TangentCircle::TangentCircle(const sf::Vector2f& p0, const sf::Vector2f& p1, const sf::Vector2f& p2) {
+    TangentCircle::TangentCircle(const Point& p0, const Point& p1, const Point& p2) {
         Matrix3x3 initial;
         initial.at[0][0] = p0.x; initial.at[0][1] = p0.y; initial.at[0][2] = 1;
         initial.at[1][0] = p1.x; initial.at[1][1] = p1.y; initial.at[1][2] = 1;
