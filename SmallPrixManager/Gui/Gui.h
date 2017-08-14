@@ -1,7 +1,6 @@
 #ifndef SPM_GUI
 #define SPM_GUI
 
-#include <cstdint>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>

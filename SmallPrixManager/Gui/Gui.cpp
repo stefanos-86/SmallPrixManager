@@ -46,9 +46,8 @@ namespace spm {
 				window.close();
 			}
 
-			/*else if (event.type == sf::Event::MouseMoved) {
-			...si, mo me metto pure a fa' er mouse.
-			}*/
+			/*else if (event.type == sf::Event::MouseMoved)
+			    Mouse delegated to imgui.*/
 
 			else if (event.type == sf::Event::KeyPressed &&
 				event.key.code == sf::Keyboard::Escape) {
@@ -97,13 +96,11 @@ namespace spm {
             { 623, 562 },
             { 521, 562 }  // Repeat first point to close the curve.
         };
-        //PolyLine p(monza);
-        //window.draw(p);
+
 
         BezierPath b(monza);
 
-		ImGui::Begin("Monza!");
-		//ImGui::Button("Look at this pretty button");
+		ImGui::Begin("Monza!")
         static float carPosition = 0;
         ImGui::SliderFloat("Posizione machina", &carPosition, 0, b.length());
 
@@ -119,7 +116,6 @@ namespace spm {
 
 
 		window.clear();
-	//	window.draw(shape);
 		ImGui::SFML::Render(window);
 
 
