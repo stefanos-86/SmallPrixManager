@@ -4,6 +4,8 @@
 #include <memory>
 
 #include "Track.h"
+#include "VehicleDinamic.h"
+
 
 namespace spm {
 
@@ -18,7 +20,15 @@ namespace spm {
             initialization list. */
         Model();
 
+        /** Master clock for the simulated work. Calls the updates where needed. 
+            The parameter is not const because the slow motion factor may apply. */
+        void timeStep(float elapsedSeconds);
+
         std::shared_ptr<Track> track;
+        std::shared_ptr<DynamicCar> car;
+
+        /** The gui uses this to correct the time step. */
+        float slowMotion;
     };
 }
 

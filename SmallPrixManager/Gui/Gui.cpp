@@ -34,6 +34,7 @@ namespace spm {
 		sf::Clock clock;
 		while (window.isOpen()) {
 			pollEvents();
+            simulate(clock.restart().asSeconds());
 			render();
 		}
 	}
@@ -67,18 +68,20 @@ namespace spm {
 		ImGui::SFML::Update(window, deltaClock.restart());
 
 		ImGui::Begin(model.track->getName().c_str());
+        /*
         static float carPosition = 0;
         ImGui::SliderFloat("Posizione machina", &carPosition, 0, model.track->length());
-        model.track->setCarPosition(carPosition);
+        model.track->setCarPosition(carPosition); */
 
+        ImGui::SliderFloat("Slow motion", &model.slowMotion, 0, 2);
+        ImGui::Text("Velocita' (Km/h) %f", model.car->speed * 3.6);
         float radius = model.track->curvatureRadiusAtCarPosition();
         if (isinf(radius))
             ImGui::Text("Rettilineo");
         else {
             ImGui::Text("Raggio curva %f", radius);
-            ImGui::Text("v max %f", sqrt(9.81 * abs(radius)));
-            // Info utili sull'attrito: http://www.hwupgrade.it/forum/archive/index.php/t-900763.html
         }
+
 		ImGui::End();
 
 		window.clear();
@@ -95,4 +98,9 @@ namespace spm {
 
 		window.display();
 	}
+
+
+    void MasterGui::simulate(const float elapsedSeconds) {
+        model.timeStep(elapsedSeconds);
+    }
 }

@@ -84,6 +84,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Database\Database.cpp" />
+    <ClCompile Include="Database\tinyxml2.cpp" />
     <ClCompile Include="Gui\BezierAdapter.cpp" />
     <ClCompile Include="Gui\Gui.cpp" />
     <ClCompile Include="Gui\imgui\imgui-SFML.cpp" />
@@ -97,13 +99,18 @@
     <ClCompile Include="Simulation\Model.cpp" />
     <ClCompile Include="Simulation\TangentCircle.cpp" />
     <ClCompile Include="Simulation\Track.cpp" />
+    <ClCompile Include="Simulation\VehicleDinamic.cpp" />
     <ClCompile Include="SmallPrixManager.cpp" />
     <ClCompile Include="Test\Simulation\BezierTest.cpp" />
     <ClCompile Include="Test\Simulation\MathTest.cpp" />
     <ClCompile Include="Test\Simulation\TangentCircleTest.cpp" />
+    <ClCompile Include="Test\Database\DatabaseTest.cpp" />
     <ClCompile Include="Test\Simulation\TrackTest.cpp" />
+    <ClCompile Include="Test\Simulation\VehicleDinamicTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Database\Database.h" />
+    <ClInclude Include="Database\tinyxml2.h" />
     <ClInclude Include="Gui\BezierAdapter.h" />
     <ClInclude Include="Gui\Gui.h" />
     <ClInclude Include="Gui\imgui\imconfig-SFML.h" />
@@ -121,6 +128,12 @@
     <ClInclude Include="Simulation\Model.h" />
     <ClInclude Include="Simulation\TangentCircle.h" />
     <ClInclude Include="Simulation\Track.h" />
+    <ClInclude Include="Simulation\VehicleDinamic.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Test\Assets\TestAsset_TrackDatabase.xml">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

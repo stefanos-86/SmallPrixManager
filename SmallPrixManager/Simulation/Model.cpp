@@ -2,7 +2,9 @@
 
 
 namespace spm {
-    Model::Model() {
+    Model::Model() :
+        slowMotion(1)
+    {
                 std::vector<Point> monza = {
             { 521, 562 },
             { 314, 562 },
@@ -36,6 +38,22 @@ namespace spm {
 
 
         track = std::make_shared<Track>("Monza", bezierForMonza);
+
+        // Those numbers actually give meaningful results!
+        car = std::make_shared<DynamicCar>();
+        car->tireBaseFrictionCoefficient = 1;
+        car->maximumEnginePower = horsepowerToWatts(700);
+        car->airResistanceCoefficient = 0.3;
+        car->downforceCoefficient = 0.2;
+        car->dryWeight = 600;
+        car->speed = 0;
+    }
+
+
+    void Model::timeStep(float elapsedSeconds) {
+        elapsedSeconds = elapsedSeconds * slowMotion;
+        car->timeStep(elapsedSeconds, track->curvatureRadiusAtCarPosition());
+        track->advanceCar(car->speed * elapsedSeconds);
     }
 
 }

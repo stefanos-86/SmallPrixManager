@@ -15,7 +15,7 @@ namespace spm {
         Track(const std::string& name,
               const BezierPath& trajectory);
 
-        const std::string& getName();
+        const std::string& getName() const;
 
         /** Return the position of the car along the track.
             0 means it is at the start/finish line.

@@ -10,7 +10,7 @@ namespace spm {
     {};
 
 
-    const std::string& Track::getName() {
+    const std::string& Track::getName() const {
         return name;
     }
 

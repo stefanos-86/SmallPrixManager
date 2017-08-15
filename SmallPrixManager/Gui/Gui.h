@@ -18,6 +18,7 @@ namespace spm {
 	private:
 		void pollEvents();
 		void render();
+        void simulate(const float elapsedSeconds);
 
 		sf::RenderWindow window;
 		sf::Clock deltaClock;
