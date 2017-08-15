@@ -19,12 +19,32 @@ namespace spm {
         return carPosition;
     }
 
+    void Track::setCarPosition(const float position) {
+        carPosition = position;
+    }
+
+    const Point Track::getCarPoint() const {
+        return trajectory.atLength(carPosition);
+    }
+
     void Track::advanceCar(const float meters) {
         carPosition += meters;
 
         // Across the finish line.
         if (carPosition > trajectory.length())
             carPosition -= trajectory.length();
+    }
+
+    float Track::length() const {
+        return trajectory.length();
+    }
+
+    float Track::curvatureRadiusAtCarPosition() const {
+        return trajectory.curvatureRadiusAtLength(carPosition);
+    }
+
+    const BezierPath& Track::getTrackCurve() const {
+        return trajectory;
     }
  
 }

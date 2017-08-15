@@ -13,12 +13,12 @@
 #include "PolyLine.h"
 #include "BezierAdapter.h"
 
-#include "../Simulation/TangentCircle.h"
+#include "../Simulation/Model.h"
 #include "PointConversion.h"
 
 namespace spm {
-	MasterGui::MasterGui() :
-		window(sf::VideoMode(800, 600), "SmallPrixManager", sf::Style::Default)
+	MasterGui::MasterGui(Model& m) :
+		window(sf::VideoMode(800, 600), "SmallPrixManager", sf::Style::Default), model(m)
 		{
 			window.setVerticalSyncEnabled(true);
 			window.setFramerateLimit(60);
@@ -66,42 +66,12 @@ namespace spm {
 	void MasterGui::render() {
 		ImGui::SFML::Update(window, deltaClock.restart());
 
-        std::vector<Point> monza = {
-            { 521, 562 },
-            { 314, 562 },
-            { 309, 562 },
-            { 256, 568 },
-            { 184, 568 },
-            { 142, 537 },
-            { 108, 477 },
-            { 75, 250 },
-            { 60, 234 },
-            { 17, 90 },
-            { 19, 61 },
-            { 36, 44 },
-            { 108, 26 },
-            { 207, 187 },
-            { 361, 400 },
-            { 396, 400 },
-            { 424, 425 },
-            { 745, 431 },
-            { 773, 448 },
-            { 778, 481 },
-            { 769, 512 },
-            { 748, 537 },
-            { 711, 552 },
-            { 623, 562 },
-            { 521, 562 }  // Repeat first point to close the curve.
-        };
-
-
-        BezierPath b(monza);
-
-		ImGui::Begin("Monza!");
+		ImGui::Begin(model.track->getName().c_str());
         static float carPosition = 0;
-        ImGui::SliderFloat("Posizione machina", &carPosition, 0, b.length());
+        ImGui::SliderFloat("Posizione machina", &carPosition, 0, model.track->length());
+        model.track->setCarPosition(carPosition);
 
-        float radius = b.curvatureRadiusAtLength(carPosition);
+        float radius = model.track->curvatureRadiusAtCarPosition();
         if (isinf(radius))
             ImGui::Text("Rettilineo");
         else {
@@ -111,17 +81,15 @@ namespace spm {
         }
 		ImGui::End();
 
-
 		window.clear();
 		ImGui::SFML::Render(window);
 
-
-        BezierAdapter ba(b);
+        BezierAdapter ba(model.track->getTrackCurve());
         window.draw(ba);
 
         sf::CircleShape carShape(5);
         carShape.setFillColor(sf::Color::Red);
-        carShape.setPosition(toGraphic(b.atLength(carPosition)));
+        carShape.setPosition(toGraphic(model.track->getCarPoint()));
         window.draw(carShape);
 
 

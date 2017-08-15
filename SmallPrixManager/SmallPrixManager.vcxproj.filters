@@ -70,6 +70,9 @@
     <ClCompile Include="Test\Simulation\TrackTest.cpp">
       <Filter>codice</Filter>
     </ClCompile>
+    <ClCompile Include="Simulation\Model.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gui\Gui.h">
@@ -112,5 +115,6 @@
     <ClInclude Include="Simulation\Math.h" />
     <ClInclude Include="Gui\PointConversion.h" />
     <ClInclude Include="Simulation\Track.h" />
+    <ClInclude Include="Simulation\Model.h" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,8 @@
-#include "Gui/Gui.h"
-
 #include <stdexcept>
 #include <iostream>
+
+#include "Simulation\Model.h"
+#include "Gui\Gui.h"
 
 /* http://www.kino3d.com/forum/viewtopic.php?f=7&t=8806 ==> Come calcolare la frenata (...come pensavo io!). */
 
@@ -9,7 +10,7 @@
 	PATH=C:\sfml\SFML-2.4.2\bin;%PATH%
 */
 
-#define WITH_TESTS true
+//#define WITH_TESTS true
 #ifdef WITH_TESTS
 #include "gtest/gtest.h"
 #endif
@@ -23,7 +24,8 @@ int main(int argc, char **argv) {
 	using namespace spm;
 
     try {
-	    MasterGui gui;
+        Model theWorld;
+	    MasterGui gui(theWorld);
 	    gui.mainLoop();
     } catch (std::exception e) {
         std::cerr << e.what() << std::endl;
