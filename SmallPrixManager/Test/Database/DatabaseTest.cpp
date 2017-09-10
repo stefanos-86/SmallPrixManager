@@ -9,7 +9,7 @@ namespace spm {
     
 TEST(Database, tracks_from_file__names) {
     Database d;
-    const std::vector<Track> t = d.loadTracks();
+    const std::vector<Track> t = d.loadTracks("TestAsset_TrackDatabase.xml");
 
     ASSERT_EQ(t.size(), 2);
     ASSERT_EQ(t.at(0).getName(), std::string("Autodromo"));
@@ -19,7 +19,7 @@ TEST(Database, tracks_from_file__names) {
 
 TEST(Database, tracks_from_file__points) {
     Database d;
-    const std::vector<Track> t = d.loadTracks();
+    const std::vector<Track> t = d.loadTracks("TestAsset_TrackDatabase.xml");
 
     ASSERT_EQ(t.size(), 2);
     ASSERT_EQ(t.at(0).getTrackCurve().at(0).x, 1);

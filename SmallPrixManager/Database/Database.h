@@ -12,7 +12,7 @@ namespace spm {
     */
     class Database {
     public:
-        std::vector<Track> loadTracks();
+        std::vector<Track> loadTracks(const std::string& sourceFile);
 
     };
 }

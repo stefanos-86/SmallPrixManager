@@ -45,7 +45,7 @@ namespace spm {
 
         ASSERT_TRUE(std::isinf(c.curvatureRadiusAt(0.5)));
 
-        for (float i = 0; i < 1; i += 0.1)
+        for (float i = 0; i < 1; i += 0.1f)
             std::cout << c.curvatureRadiusAt(i) << std::endl;
 
         ASSERT_TRUE(std::isinf(c.curvatureRadiusAt(0)));

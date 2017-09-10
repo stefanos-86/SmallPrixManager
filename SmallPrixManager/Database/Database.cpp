@@ -24,11 +24,11 @@ namespace spm {
             throw std::runtime_error("Cpp.Lang.NullPointerException");  //...same as Java.
     }
 
-    std::vector<Track> Database::loadTracks() {
+    std::vector<Track> Database::loadTracks(const std::string& sourceFile) {
         std::vector<Track> tracks;
 
         XMLDocument tracksOnFile;
-        tracksOnFile.LoadFile( "TestAsset_TrackDatabase.xml" );
+        tracksOnFile.LoadFile(sourceFile.c_str());
         stopOnError(tracksOnFile);
         
         XMLElement* root = tracksOnFile.FirstChildElement("tracks");
