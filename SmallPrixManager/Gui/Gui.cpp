@@ -1,6 +1,9 @@
 #include "Gui.h"
 
 #include <memory>
+#include <array>
+#include <algorithm>
+
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/OpenGL.hpp>
@@ -24,6 +27,8 @@ namespace spm {
 			window.setFramerateLimit(60);
 			sf::ContextSettings settings = window.getSettings();
 			ImGui::SFML::Init(window);
+            
+            trackSelector.fill(false);
 		}
 
 	MasterGui::~MasterGui() {
@@ -61,6 +66,18 @@ namespace spm {
 			}
 
 			ImGui::SFML::ProcessEvent(event);
+
+
+            // Deal with track selections
+            const auto selectedTrack = std::find(std::begin(trackSelector),
+                                                    std::end(trackSelector),
+                                                    true);
+            const auto selectionPosition = selectedTrack - std::begin(trackSelector);
+            if (selectionPosition < 50 && model.currentTrack->getName() != model.tracks.at(selectionPosition).getName()){
+                model.currentTrack = model.tracks.begin() + selectionPosition;
+            }
+
+            trackSelector.fill(false);  // Reset for next time.
 		}
 	}
 
@@ -82,6 +99,16 @@ namespace spm {
             ImGui::Text("Raggio curva %f", radius);
         }
 
+        if (ImGui::BeginMenu("Tracks")) {
+            size_t trackCounter = 0;
+            for (const Track& track : model.tracks)
+            {
+                ImGui::MenuItem(track.getName().c_str(), nullptr, &trackSelector[trackCounter], &trackSelector[trackCounter]);
+                trackCounter++;
+            }
+        
+            ImGui::EndMenu();
+        }
 		ImGui::End();
 
 		window.clear();
