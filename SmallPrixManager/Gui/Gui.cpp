@@ -67,7 +67,7 @@ namespace spm {
 	void MasterGui::render() {
 		ImGui::SFML::Update(window, deltaClock.restart());
 
-		ImGui::Begin(model.track->getName().c_str());
+		ImGui::Begin(model.currentTrack->getName().c_str());
         /*
         static float carPosition = 0;
         ImGui::SliderFloat("Posizione machina", &carPosition, 0, model.track->length());
@@ -75,7 +75,7 @@ namespace spm {
 
         ImGui::SliderFloat("Slow motion", &model.slowMotion, 0, 2);
         ImGui::Text("Velocita' (Km/h) %f", model.car->speed * 3.6);
-        float radius = model.track->curvatureRadiusAtCarPosition();
+        float radius = model.currentTrack->curvatureRadiusAtCarPosition();
         if (isinf(radius))
             ImGui::Text("Rettilineo");
         else {
@@ -87,12 +87,12 @@ namespace spm {
 		window.clear();
 		ImGui::SFML::Render(window);
 
-        BezierAdapter ba(model.track->getTrackCurve());
+        BezierAdapter ba(model.currentTrack->getTrackCurve());
         window.draw(ba);
 
         sf::CircleShape carShape(5);
         carShape.setFillColor(sf::Color::Red);
-        carShape.setPosition(toGraphic(model.track->getCarPoint()));
+        carShape.setPosition(toGraphic(model.currentTrack->getCarPoint()));
         window.draw(carShape);
 
 

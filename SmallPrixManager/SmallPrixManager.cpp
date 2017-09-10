@@ -27,7 +27,8 @@ int main(int argc, char **argv) {
     try {
         Model theWorld;
         Database db;
-        theWorld.track = std::make_shared<Track>(db.loadTracks("Tracks.xml").front());  // For now, one track. Intentional copy here.
+        theWorld.tracks = db.loadTracks("Tracks.xml");
+        theWorld.currentTrack = theWorld.tracks.begin(); // This should probably be in a constructor...
 
 	    MasterGui gui(theWorld);
 	    gui.mainLoop();

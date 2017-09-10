@@ -2,6 +2,7 @@
 #define SPM_MODEL
 
 #include <memory>
+#include <vector>
 
 #include "Track.h"
 #include "VehicleDinamic.h"
@@ -24,7 +25,8 @@ namespace spm {
             The parameter is not const because the slow motion factor may apply. */
         void timeStep(float elapsedSeconds);
 
-        std::shared_ptr<Track> track;
+        std::vector<Track> tracks;  ///< Find here all known tracks.
+        std::vector<Track>::iterator currentTrack;   /// Racing on this one.
         std::shared_ptr<DynamicCar> car;
 
         /** The gui uses this to correct the time step. */
