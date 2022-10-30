@@ -7,7 +7,6 @@ namespace spm {
 
 	/** Toolbox with a miscellanea of mathematical utilities.
         This project does not use enough math to justify linking a real library.
-        SFML does not have expose its internal math, so no way to recycle. 
         
         This file provides just enough operators as needed, not a complete interface. 
         
