@@ -22,18 +22,6 @@
     <ClCompile Include="SmallPrixManager.cpp">
       <Filter>codice</Filter>
     </ClCompile>
-    <ClCompile Include="Gui\imgui\imgui.cpp">
-      <Filter>codice\Gui\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Gui\imgui\imgui_demo.cpp">
-      <Filter>codice\Gui\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Gui\imgui\imgui_draw.cpp">
-      <Filter>codice\Gui\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Gui\imgui\imgui-SFML.cpp">
-      <Filter>codice\Gui\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="Gui\Gui.cpp">
       <Filter>codice\Gui</Filter>
     </ClCompile>
@@ -88,34 +76,31 @@
     <ClCompile Include="Test\Database\DatabaseTest.cpp">
       <Filter>codice</Filter>
     </ClCompile>
+    <ClCompile Include="Gui\imgui\imgui.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\imgui\imgui_demo.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\imgui\imgui_draw.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\imgui\imgui_impl_sdl.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\imgui\imgui_tables.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\imgui\imgui_widgets.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\imgui\imgui_impl_sdlrenderer.cpp">
+      <Filter>codice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gui\Gui.h">
       <Filter>codice\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="Gui\imgui\imconfig.h">
-      <Filter>codice\Gui\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Gui\imgui\imgui.h">
-      <Filter>codice\Gui\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Gui\imgui\imgui_internal.h">
-      <Filter>codice\Gui\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Gui\imgui\stb_rect_pack.h">
-      <Filter>codice\Gui\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Gui\imgui\stb_textedit.h">
-      <Filter>codice\Gui\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Gui\imgui\stb_truetype.h">
-      <Filter>codice\Gui\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Gui\imgui\imconfig-SFML.h">
-      <Filter>codice\Gui\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Gui\imgui\imgui-SFML.h">
-      <Filter>codice\Gui\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Gui\PolyLine.h">
       <Filter>codice\Gui</Filter>
@@ -134,8 +119,20 @@
     <ClInclude Include="Simulation\Track.h" />
     <ClInclude Include="Database\tinyxml2.h" />
     <ClInclude Include="Database\Database.h" />
+    <ClInclude Include="Gui\imgui\imconfig.h" />
+    <ClInclude Include="Gui\imgui\imgui.h" />
+    <ClInclude Include="Gui\imgui\imgui_impl_sdl.h" />
+    <ClInclude Include="Gui\imgui\imgui_internal.h" />
+    <ClInclude Include="Gui\imgui\imstb_rectpack.h" />
+    <ClInclude Include="Gui\imgui\imstb_textedit.h" />
+    <ClInclude Include="Gui\imgui\imstb_truetype.h" />
+    <ClInclude Include="Gui\imgui\imgui_impl_sdlrenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Test\Assets\TestAsset_TrackDatabase.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Assets\imgui.ini" />
+    <CopyFileToFolders Include="Assets\Tracks.xml" />
   </ItemGroup>
 </Project>

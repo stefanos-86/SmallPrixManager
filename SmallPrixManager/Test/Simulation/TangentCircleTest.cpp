@@ -1,3 +1,5 @@
+#ifdef TODO_TESTS_DISABLED
+
 #include "gtest/gtest.h"
 
 
@@ -12,3 +14,5 @@ namespace spm {
 		ASSERT_EQ(c.radius(), 1);
 	}
 }
+
+#endif

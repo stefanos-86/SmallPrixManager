@@ -3,15 +3,15 @@
 #include <memory>
 #include <array>
 #include <algorithm>
+#include <stdexcept>
 
-
-#include <SFML/Window/Event.hpp>
-#include <SFML/OpenGL.hpp>
-
-#include <SFML/Graphics/CircleShape.hpp>
+#define SDL_MAIN_HANDLED
+#include <SDL.h>
+//#undef main  // https://stackoverflow.com/questions/6847360/error-lnk2019-unresolved-external-symbol-main-referenced-in-function-tmainc
 
 #include "imgui\imgui.h"
-#include "imgui\imgui-SFML.h"
+#include "imgui\imgui_impl_sdl.h"
+#include "imgui\imgui_impl_sdlrenderer.h"
 
 #include "PolyLine.h"
 #include "BezierAdapter.h"
@@ -20,69 +20,107 @@
 #include "PointConversion.h"
 
 namespace spm {
-	MasterGui::MasterGui(Model& m) :
-		window(sf::VideoMode(800, 600), "SmallPrixManager", sf::Style::Default), model(m)
-		{
-			window.setVerticalSyncEnabled(true);
-			window.setFramerateLimit(60);
-			sf::ContextSettings settings = window.getSettings();
-			ImGui::SFML::Init(window);
-            
-            trackSelector.fill(false);
-		}
+    MasterGui::MasterGui(Model& m) :
+        model(m),
+        haltMainLoop(false)
+    {
+        SDL_SetMainReady();
+
+        if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
+        {
+            printf("Error: %s\n", SDL_GetError());
+            throw std::runtime_error("SDL error");
+        }
+
+        // Setup window
+        SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
+        SDL_Window* window = SDL_CreateWindow("Small Prix Manager", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, window_flags);
+
+        // Setup SDL_Renderer instance
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
+        if (renderer == NULL)
+        {
+            SDL_Log("Error creating SDL_Renderer!");
+            throw std::runtime_error("SDL error");
+        }
+        SDL_RendererInfo info;
+        SDL_GetRendererInfo(renderer, &info);
+        SDL_Log("Current SDL_Renderer: %s", info.name);
+
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+        //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+        // Setup Dear ImGui style
+        ImGui::StyleColorsDark();
+        //ImGui::StyleColorsLight();
+
+        // Setup Platform/Renderer backends
+        ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
+        ImGui_ImplSDLRenderer_Init(renderer);
+
+        trackSelector.fill(false);
+    }
 
 	MasterGui::~MasterGui() {
-		ImGui::SFML::Shutdown();
+        ImGui_ImplSDLRenderer_Shutdown();
+        ImGui_ImplSDL2_Shutdown();
+        ImGui::DestroyContext();
+
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
 	}
 
 	void MasterGui::mainLoop() {
-		sf::Clock clock;
-		while (window.isOpen()) {
+		while (!haltMainLoop) {
 			pollEvents();
-            simulate(clock.restart().asSeconds());
+            simulate(1); // TODO: elapsed seconds.
 			render();
 		}
 	}
 
 	void MasterGui::pollEvents() {
-		sf::Event event;
-		while (window.pollEvent(event)) {
-
-			if (event.type == sf::Event::Closed) {
-				window.close();
-			}
-
-			/*else if (event.type == sf::Event::MouseMoved)
-			    Mouse delegated to imgui.*/
-
-			else if (event.type == sf::Event::KeyPressed &&
-				event.key.code == sf::Keyboard::Escape) {
-				window.close();
-			}
-			else if (event.type == sf::Event::Resized)
-			{
-				// adjust the viewport when the window is resized
-				glViewport(0, 0, event.size.width, event.size.height);
-			}
-
-			ImGui::SFML::ProcessEvent(event);
-
-
-            // Deal with track selections
-            const auto selectedTrack = std::find(std::begin(trackSelector),
-                                                    std::end(trackSelector),
-                                                    true);
-            const auto selectionPosition = selectedTrack - std::begin(trackSelector);
-            if (selectionPosition < 50 && model.currentTrack->getName() != model.tracks.at(selectionPosition).getName()){
-                model.currentTrack = model.tracks.begin() + selectionPosition;
+        SDL_Event event;
+        while (SDL_PollEvent(&event))
+        {
+            ImGui_ImplSDL2_ProcessEvent(&event);
+            if (event.type == SDL_QUIT) {
+                haltMainLoop = true;
             }
+            else if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window))
+            {
+                haltMainLoop = true;
+            }
+            else if (event.type == SDL_KEYDOWN && event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+            {
+                haltMainLoop = true;
+            }
+            // TODO: window resize.
+        }
 
-            trackSelector.fill(false);  // Reset for next time.
-		}
+        if (haltMainLoop)
+            return;
+		
+
+        // Deal with track selections
+        const auto selectedTrack = std::find(std::begin(trackSelector),
+                                                std::end(trackSelector),
+                                                true);
+        const auto selectionPosition = selectedTrack - std::begin(trackSelector);
+        if (selectionPosition < 50 && model.currentTrack->getName() != model.tracks.at(selectionPosition).getName()){
+            model.currentTrack = model.tracks.begin() + selectionPosition;
+        }
+
+        trackSelector.fill(false);  // Reset for next time.
 	}
 
 	void MasterGui::render() {
-		ImGui::SFML::Update(window, deltaClock.restart());
+        ImGui_ImplSDLRenderer_NewFrame();
+        ImGui_ImplSDL2_NewFrame();
+        ImGui::NewFrame();
 
 		ImGui::Begin(model.currentTrack->getName().c_str());
         /*
@@ -111,9 +149,16 @@ namespace spm {
         }
 		ImGui::End();
 
-		window.clear();
-		ImGui::SFML::Render(window);
+        ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+        ImGui::Render();
+        SDL_SetRenderDrawColor(renderer, (Uint8)(clear_color.x * 255), (Uint8)(clear_color.y * 255), (Uint8)(clear_color.z * 255), (Uint8)(clear_color.w * 255));
+        SDL_RenderClear(renderer);
+        ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
+        SDL_RenderPresent(renderer);
 
+        /*
+        * 
+        * TODO: port to SDL
         BezierAdapter ba(model.currentTrack->getTrackCurve());
         window.draw(ba);
 
@@ -121,9 +166,10 @@ namespace spm {
         carShape.setFillColor(sf::Color::Red);
         carShape.setPosition(toGraphic(model.currentTrack->getCarPoint()));
         window.draw(carShape);
-
+         
 
 		window.display();
+        */
 	}
 
 

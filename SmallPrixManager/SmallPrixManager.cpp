@@ -8,9 +8,12 @@
 /* http://www.kino3d.com/forum/viewtopic.php?f=7&t=8806 ==> Come calcolare la frenata (...come pensavo io! Ma è tosta!).
   Per non parlare dei suggerimenti di alessio (autopilota o problema di CSP).*/
 
-/** Don't forget to install SFML in the PATH:
-	PATH=C:\sfml\SFML-2.4.2\bin;%PATH%
-*/
+// TODO: reactivate tests (need to create VC++ project for that, or relink gtest as standalone).
+// Additional deps where gtest.lib gtest_main - md.lib
+#undef WITH_TESTS
+
+// TODO: additional deps on opengl may be not needed.
+
 
 #ifdef WITH_TESTS  // Defined in debug configuration.
 #include "gtest/gtest.h"

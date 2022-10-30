@@ -3,9 +3,8 @@
 
 #include <array>
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/System/Clock.hpp>
-
+struct SDL_Renderer;
+struct SDL_Window;
 
 namespace spm {
     class Model;
@@ -21,8 +20,8 @@ namespace spm {
 		void render();
         void simulate(const float elapsedSeconds);
 
-		sf::RenderWindow window;
-		sf::Clock deltaClock;
+		SDL_Renderer* renderer;
+		SDL_Window* window;
 
         Model& model;
 
@@ -30,6 +29,8 @@ namespace spm {
             I don't expect more than 50 tracks. This is a parallel
             array with the tracks in the model. */
         std::array<bool, 50> trackSelector;
+
+		bool haltMainLoop;
 	};
 }
 

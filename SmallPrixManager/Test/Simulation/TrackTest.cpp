@@ -1,3 +1,5 @@
+#ifdef TODO_TESTS_DISABLED
+
 #include "gtest/gtest.h"
 
 #include "../../Simulation/Track.h"
@@ -48,3 +50,5 @@ namespace spm {
     }
 	
 }
+
+#endif

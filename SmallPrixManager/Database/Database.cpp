@@ -26,7 +26,6 @@ namespace spm {
 
     std::vector<Track> Database::loadTracks(const std::string& sourceFile) {
         std::vector<Track> tracks;
-
         XMLDocument tracksOnFile;
         tracksOnFile.LoadFile(sourceFile.c_str());
         stopOnError(tracksOnFile);

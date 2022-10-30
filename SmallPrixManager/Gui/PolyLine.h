@@ -3,12 +3,12 @@
 
 #include <vector>
 
-#include <SFML/Graphics/VertexArray.hpp>
+
 
 namespace spm {
 
 	/** Very simple wrapper to draw a line strip. */
-	class PolyLine : public sf::Drawable
+	class PolyLine
 	{
 	public:
 		/** Will copy the content and also truncate the decimals.
@@ -18,10 +18,10 @@ namespace spm {
 		~PolyLine();
 
 	private:
-		sf::VertexArray points;
+		//sf::VertexArray points;
 
 		/** Makes it a drawable. */
-		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+		//virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	};
 
 }

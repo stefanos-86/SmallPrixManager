@@ -1,3 +1,5 @@
+#ifdef TODO_TESTS_DISABLED
+
 #include "gtest/gtest.h"
 
 #include "../../Database/Database.h"
@@ -26,3 +28,5 @@ TEST(Database, tracks_from_file__points) {
 }
 
 }
+
+#endif
