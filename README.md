@@ -23,8 +23,8 @@ I have nothing against [SFML](https://www.sfml-dev.org/), but there are no pre-b
 I had a look at the list of its build dependencies... and decided it was faster to simply switch over to SDL
 (or maybe not - but what's done is done). The original code is still there, safe in the Git history.
 
-There used to be unit tests. They are still there, but commented out. The porting did not require changing the testing 
-logic. And, thanks to this "cop out", did not require GTest as well.
+There used to be unit tests. They are still there, but commented out. The porting did not require changing the tests, nor _using_ the tests.
+And, thanks to this "cop out", did not require to link GTest as well.
 
 So, it is old, bad, half-commented-out, did not reach its goals.
 
