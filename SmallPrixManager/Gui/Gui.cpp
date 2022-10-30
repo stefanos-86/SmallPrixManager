@@ -62,6 +62,8 @@ namespace spm {
         ImGui_ImplSDLRenderer_Init(renderer);
 
         trackSelector.fill(false);
+
+        lastFrameTime = SDL_GetPerformanceCounter();
     }
 
 	MasterGui::~MasterGui() {
@@ -75,9 +77,14 @@ namespace spm {
 	}
 
 	void MasterGui::mainLoop() {
-		while (!haltMainLoop) {
+        while (!haltMainLoop) {
 			pollEvents();
-            simulate(1); // TODO: elapsed seconds.
+
+            const Uint64 now = SDL_GetPerformanceCounter();
+            const float deltaTime = (now - lastFrameTime) / (float)SDL_GetPerformanceFrequency();
+            lastFrameTime = now;
+
+            simulate(deltaTime);
 			render();
 		}
 	}
@@ -154,22 +161,25 @@ namespace spm {
         SDL_SetRenderDrawColor(renderer, (Uint8)(clear_color.x * 255), (Uint8)(clear_color.y * 255), (Uint8)(clear_color.z * 255), (Uint8)(clear_color.w * 255));
         SDL_RenderClear(renderer);
         ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
-        SDL_RenderPresent(renderer);
-
-        /*
-        * 
-        * TODO: port to SDL
+        
         BezierAdapter ba(model.currentTrack->getTrackCurve());
-        window.draw(ba);
+        ba.draw(renderer);
 
-        sf::CircleShape carShape(5);
-        carShape.setFillColor(sf::Color::Red);
-        carShape.setPosition(toGraphic(model.currentTrack->getCarPoint()));
-        window.draw(carShape);
-         
+        // Ouch! No SDL function to draw a circle. SFML had it, replace it with a rect.
+        SDL_Rect car;
+        constexpr float carDotRadius = 3.0f;
+        constexpr float carWidth = carDotRadius * 2;
+        car.h = carWidth;
+        car.w = carWidth;
 
-		window.display();
-        */
+        const SDL_Point carCenter = toGraphic(model.currentTrack->getCarPoint());
+        car.x = carCenter.x - carDotRadius;
+        car.y = carCenter.y - carDotRadius;
+
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_RenderDrawRect(renderer, &car);
+
+        SDL_RenderPresent(renderer);
 	}
 
 

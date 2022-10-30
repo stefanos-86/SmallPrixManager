@@ -3,7 +3,7 @@
 
 #include <vector>
 
-
+#include <SDL.h>
 
 namespace spm {
 
@@ -17,11 +17,13 @@ namespace spm {
 		PolyLine(const std::vector<float>& points);
 		~PolyLine();
 
-	private:
-		//sf::VertexArray points;
-
 		/** Makes it a drawable. */
-		//virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+		void draw(SDL_Renderer* renderer) const;
+
+	private:
+		std::vector<SDL_Point> points;
+
+		
 	};
 
 }

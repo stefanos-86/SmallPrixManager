@@ -1,10 +1,12 @@
 #include "PointConversion.h"
 
 namespace spm {
-    /*
-    sf::Vector2f toGraphic(const Point& p) {
-        return sf::Vector2f(p.x, p.y);
+    SDL_Point toGraphic(const Point& p) {
+        SDL_Point graphicPoint;
+        graphicPoint.x = p.x;
+        graphicPoint.y = p.y;
+        return graphicPoint;
     }
-	*/
+	
 }
 

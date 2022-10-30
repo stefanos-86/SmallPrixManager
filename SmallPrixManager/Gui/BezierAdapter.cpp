@@ -1,26 +1,20 @@
 #include "BezierAdapter.h"
 
-//#include <SFML\Graphics\Vertex.hpp>
-//#include <SFML\Graphics\RenderTarget.hpp>
-
 #include "PointConversion.h"
 
 namespace spm {
-    BezierAdapter::BezierAdapter(const Bezier& curve) //:
-       // points(sf::LineStrip, Bezier::RASTER_POINT_COUNT)
+    BezierAdapter::BezierAdapter(const Bezier& curve)
     {
         storeRasterizedPoints(curve);
     }
 
-    BezierAdapter::BezierAdapter(const BezierPath& curve)// :
-      //  points(sf::LineStrip, Bezier::RASTER_POINT_COUNT * curve.size())
+    BezierAdapter::BezierAdapter(const BezierPath& curve)
     {
         storeRasterizedPoints(curve);
     }
 
-    /*
-    void BezierAdapter::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-        target.draw(points, states);
+    void BezierAdapter::draw(SDL_Renderer* renderer) const {
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_RenderDrawLines(renderer, points.data(), points.size());
     }
-    */
 }

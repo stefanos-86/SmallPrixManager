@@ -25,6 +25,8 @@ namespace spm {
 
         Model& model;
 
+		uint64_t lastFrameTime;
+
         /** Booleans to be filled to get the selected track. 
             I don't expect more than 50 tracks. This is a parallel
             array with the tracks in the model. */

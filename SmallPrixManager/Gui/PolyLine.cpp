@@ -4,9 +4,10 @@
 
 namespace spm {
 
-	PolyLine::PolyLine(const std::vector<float>& points) // :
-	//points(sf::LineStrip, points.size() / 2)
+	PolyLine::PolyLine(const std::vector<float>& points)
 	{
+		this->points.reserve(points.size());
+
 		std::vector<float>::const_iterator i = std::begin(points);
 		size_t sfPointsCounter = 0;
 		while (i != std::end(points)){
@@ -15,8 +16,11 @@ namespace spm {
 			const float y = *i;
 			++i;
 
-		//	this->points[sfPointsCounter].position = sf::Vector2f(x, y);
-		//	this->points[sfPointsCounter].color = sf::Color::White;
+			SDL_Point p;
+			p.x = x;
+			p.y = y;
+
+			this->points.emplace_back(p);
 			++sfPointsCounter;
 		}
 	}
@@ -26,9 +30,10 @@ namespace spm {
 	{
 	}
 
-	/*
-	void PolyLine::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-		target.draw(points, states);
+	
+	void PolyLine::draw(SDL_Renderer* renderer) const {
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		SDL_RenderDrawLines(renderer, points.data(), points.size());
 	}
-	*/
+	
 }

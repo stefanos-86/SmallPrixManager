@@ -3,7 +3,7 @@
 
 #include <vector>
 
-//#include <SFML/Graphics/VertexArray.hpp>
+#include <SDL.h>
 
 #include "../Simulation/Bezier.h"
 
@@ -12,35 +12,30 @@ namespace spm {
 	/** Very simple wrapper to draw one of the Bezier curves used in the simulation.
         Uses the simplest possible algorithm: just compute this many regularly spaced points.
         */
-	class BezierAdapter //: public sf::Drawable
+	class BezierAdapter
 	{
 	public:
         BezierAdapter(const Bezier& curve);
         BezierAdapter(const BezierPath& curve);
 
+        void draw(SDL_Renderer* renderer) const;
+
 	private:
         /** Assumes constant curves, caches the points. */
-       // sf::VertexArray points;
+        std::vector<SDL_Point> points;
 
-       // virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
+  
         template <typename Curve>
         void storeRasterizedPoints(const Curve& c) {
-            /*
             std::vector<Point> rasterizedPoints;
             c.raster(rasterizedPoints);
         
-        
             for (size_t i = 0; i < rasterizedPoints.size(); ++i) {
-                this->points[i].position = toGraphic(rasterizedPoints[i]);
-                this->points[i].color = sf::Color::White;
+               points.emplace_back(toGraphic(rasterizedPoints[i]));
+            }
         }
-            */
-       }; 
-	};
-
-
-
+            
+    };
 
 }
 #endif
