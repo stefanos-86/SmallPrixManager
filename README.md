@@ -58,7 +58,7 @@ When it meets the hairpin at the end of a very fast straight... it just immediat
 I could not invent nor look up a way to simulate a car slowing down to an appropriate speed _before_ the corner, within belivable limits
 of tire grip and brakes' power. How to know how much force to apply on the brakes? How much distance before the corner? No clue.
 
-And so I had to give up.
+I had to give up.
 
 ## Compiling
 The Visual Studio project is included, it has only one external dependency on [SDL](https://www.libsdl.org/).
