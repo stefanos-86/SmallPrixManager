@@ -1,5 +1,6 @@
 # SmallPrixManager
 Many, many, many years ago I keenly played [Grand Prix Manager](https://en.wikipedia.org/wiki/Grand_Prix_Manager).
+
 It had nice overhead views of many famous racing tracks, with cars zipping around them during the races.
 
 For a long time I could not guess how they move the cars around the track.
