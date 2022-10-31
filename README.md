@@ -70,3 +70,9 @@ The project relies on [Dear ImGui](https://github.com/ocornut/imgui).
 
 As per the instructions, I added their files to the projct.
 I thank the Dear ImGui authors for their work, and I hope I am not breaking any license by embedding it there (please let me know if you know better).
+
+### On tracks and copyright...
+As you can see in the screenshot, the "simulation" uses a coarse reproduction of two famous racing tracks: the [Monza Circuit](https://en.wikipedia.org/wiki/Monza_Circuit) and the [Nardò Ring](https://en.wikipedia.org/wiki/Nard%C3%B2_Ring).
+
+I confess I am not sure if their names and shapes can be used as "example tracks", "something like them".
+Should this be a breach of some trademark or copyright, please open an issue. I'll quickly remove any unauthorized material.
