@@ -87,6 +87,7 @@ namespace spm {
             simulate(deltaTime);
 			render();
 		}
+	// TODO: check and, if needed, limit frame rate.
 	}
 
 	void MasterGui::pollEvents() {
