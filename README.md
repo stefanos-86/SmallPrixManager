@@ -4,7 +4,7 @@ Many, many, many years ago I keenly played [Grand Prix Manager](https://en.wikip
 It had nice overhead views of many famous racing tracks, with cars zipping around them during the races.
 
 For a long time I could not guess how they move the cars around the track.
-Pushing a sprite along a fixed curve is one thing. But a car? Which has to break, may skid off the track, can only go as fast as its engine allow?
+Pushing a sprite along a fixed curve is one thing. But a car? Which has to break, may skid off the track, can only go as fast as its engine allows?
 A whole other thing.
 
 To this day, I don't know how _they_ did it.
@@ -52,9 +52,9 @@ as soon as the road is straight.
 
 The brakes.
 
-The bizzare algorithm I described does not account for braking. It just pins the car at the maximum speed it can get without skidding off the corners.
+The bizzare algorithm I described does not account for braking. It just pins the car at the maximum speed it can go without skidding off the corners.
 
-When it meets the hairpin at the end of a very fast straight... it just immediately go from 300km/h to 10km/h. No braking distance at all.
+When it meets the hairpin at the end of a very fast straight... it just immediately goes from 300km/h to 10km/h. No braking distance at all.
 
 I could not invent nor look up a way to simulate a car slowing down to an appropriate speed _before_ the corner, within belivable limits
 of tire grip and brakes' power. How to know how much force to apply on the brakes? How much distance before the corner? No clue.
